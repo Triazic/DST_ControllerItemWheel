@@ -141,21 +141,24 @@ local GestureBadge = Class(Widget, function(self, prefab, emotename, emote, imag
 	end
 	
 	if image then
-		self.puppetbg = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
-		self.puppet = self.icon:AddChild(SkinsPuppet())
-		self.puppet.animstate:SetBank("wilson")
-		self.puppet.animstate:Hide("ARM_carry")
+		self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
 		
-		self.emote = emote
-		self:ResetEmote()
+		-- self.puppetbg = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
+		-- self.puppet = self.icon:AddChild(SkinsPuppet())
+		-- self.puppet.animstate:SetBank("wilson")
+		-- self.puppet.animstate:Hide("ARM_carry")
 		
-		self.puppetframe = self.icon:AddChild(Image(ATLAS, "avatar_frame_white.tex"))
-		self.puppetframe:SetTint(unpack(color))
+		-- self.emote = emote
+		-- self:ResetEmote()
+		
+		-- self.puppetframe = self.icon:AddChild(Image(ATLAS, "avatar_frame_white.tex"))
+		-- self.puppetframe:SetTint(unpack(color))
 	end
 	
 	if text then
+		local _emotename = "log"
 		self.bg = self.icon:AddChild(Image("images/gesture_bg.xml", "gesture_bg.tex"))
-		self.bg:SetScale(.11*(emotename:len()+1),.5,0)
+		self.bg:SetScale(.11*(_emotename:len()+1),.5,0)
 		if image then self.bg:SetPosition(-.5,-34,0) end
 		self.bg:SetTint(unpack(color))
 
@@ -167,7 +170,7 @@ local GestureBadge = Class(Widget, function(self, prefab, emotename, emote, imag
 			self.text:SetPosition(3.5, -18, 0)
 		end
 		self.text:SetScale(1,.78,1)
-		self.text:SetString("/"..emotename)
+		self.text:SetString("/".._emotename)
 	end
 end)
 
