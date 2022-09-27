@@ -332,6 +332,10 @@ end
 -- 	end
 -- end)
 
+-- GLOBAL.PlayerHud.OpenControllerInventory = function()
+-- 	print("I overrode the bullshit")
+-- end
+
 local handlers_applied = false
 local function AddGestureWheel(self)
 	BuildEmoteSets() --delay this so that the account item checks are more likely to work
