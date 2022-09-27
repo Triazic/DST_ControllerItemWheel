@@ -2,7 +2,7 @@ local Widget = require "widgets/widget"
 local Text = require "widgets/text"
 local GestureBadge = require("widgets/gesturebadge")
 
-local GestureWheel = Class(Widget, function(self, emote_sets, image, text, rightstick)
+local GestureWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
 	Widget._ctor(self, "GestureWheel")
 	self.isFE = false
 	self:SetClickable(false)
@@ -39,9 +39,9 @@ local GestureWheel = Class(Widget, function(self, emote_sets, image, text, right
 		end
 	end
 	-- Sort the emote sets in order of decreasing radius
-	table.sort(emote_sets, function(a,b) return a.radius > b.radius end)
+	table.sort(item_sets, function(a,b) return a.radius > b.radius end)
 	local scale = 1
-	for _,emote_set in ipairs(emote_sets) do
+	for _,emote_set in ipairs(item_sets) do
 		build_wheel(emote_set.name, emote_set.emotes, emote_set.radius, emote_set.color, scale)
 		scale = scale * 0.85
 	end
@@ -52,7 +52,7 @@ local GestureWheel = Class(Widget, function(self, emote_sets, image, text, right
 	self.innerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_RIGHT))
 	self.outerhint = self.controllerhints:AddChild(Text(UIFONT, 30))
 	self.outerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_LEFT))
-	self.outerhint:SetPosition(-1*emote_sets[1].radius - 100, 0)
+	self.outerhint:SetPosition(-1*item_sets[1].radius - 100, 0)
 	self.controllerhints:Hide()
 end)
 

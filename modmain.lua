@@ -135,17 +135,17 @@ if OLD_ADDED and not ONLYEIGHT then
 		}
 end
 
-local emote_sets = {}
+local item_sets = {}
 
 local function BuildEmoteSets()
-	emote_sets = {}
+	item_sets = {}
 	
 	if PARTY_EMOTES ~= nil then
-		table.insert(emote_sets, PARTY_EMOTES)
+		table.insert(item_sets, PARTY_EMOTES)
 	end
 
 	if OLD_EMOTES ~= nil then
-		table.insert(emote_sets, OLD_EMOTES)
+		table.insert(item_sets, OLD_EMOTES)
 	end
 	
 	--Add in all the default emotes
@@ -178,7 +178,7 @@ local function BuildEmoteSets()
 		-- If we have only two emotes, put them in the normal wheel; a 2-item wheel is... not round
 		-- Otherwise, we can make an inner wheel for them
 		if #EMOTE_ITEMS_OWNED > 2 then
-			table.insert(emote_sets, {
+			table.insert(item_sets, {
 				name = "unlockable",
 				emotes = EMOTE_ITEMS_OWNED,
 				radius = 260, -- will need to be adjusted if number of emotes changes
@@ -192,7 +192,7 @@ local function BuildEmoteSets()
 	end
 	
 	table.insert(
-		emote_sets, 
+		item_sets, 
 		{
 			name = "default",
 			emotes = EMOTES,
@@ -347,7 +347,7 @@ local function AddGestureWheel(self)
 	if gesturewheel then
 		gesturewheel:Kill()
 	end
-	gesturewheel = controls:AddChild(GestureWheel(emote_sets, SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
+	gesturewheel = controls:AddChild(GestureWheel(item_sets, SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
 	controls.gesturewheel = gesturewheel
 	ResetTransform()
 	gesturewheel:Hide()
