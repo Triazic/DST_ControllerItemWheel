@@ -134,7 +134,7 @@ configuration_options =
 			{description = "Left", data = false},
 			{description = "Right", data = true},
 		},
-		default = false,
+		default = true,
 	},    
 	{
 		name = "ONLYEIGHT",
