@@ -233,6 +233,7 @@ function GestureBadge:ResetEmote()
 end
 
 function GestureBadge:Expand()
+	-- focusses a badge. icon becomes larger, turns green
 	if self.expanded then return end
 	self.expanded = true
 	self.icon:ScaleTo(SMALLSCALE, LARGESCALE, .25)
@@ -242,6 +243,7 @@ function GestureBadge:Expand()
 end
 
 function GestureBadge:Contract()
+	-- unfocusses a badge (default state)
 	if not self.expanded then return end
 	self.expanded = false
 	self.icon:ScaleTo(LARGESCALE, SMALLSCALE, .25)
