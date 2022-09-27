@@ -135,7 +135,7 @@ end
 
 local item_sets = {}
 
-local function BuildEmoteSets()
+local function BuildItemSets()
 	item_sets = {}
 	
 	if PARTY_EMOTES ~= nil then
@@ -340,7 +340,7 @@ end
 
 local handlers_applied = false
 local function AddGestureWheel(self)
-	BuildEmoteSets() --delay this so that the account item checks are more likely to work
+	BuildItemSets() --delay this so that the account item checks are more likely to work
 	controls = self -- this just makes controls available in the rest of the modmain's functions
 	if gesturewheel then
 		gesturewheel:Kill()
