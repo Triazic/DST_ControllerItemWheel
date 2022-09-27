@@ -1,6 +1,6 @@
 local Widget = require "widgets/widget"
 local Text = require "widgets/text"
-local GestureBadge = require("widgets/gesturebadge")
+local GestureBadge = require("widgets/itembadge")
 
 local GestureWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
 	Widget._ctor(self, "GestureWheel")

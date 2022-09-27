@@ -1,5 +1,3 @@
-local inventoryBar = GLOBAL.require "widgets/inventorybar"
-
 Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
@@ -204,7 +202,7 @@ end
 
 --All code below is for handling the wheel
 
-local GestureWheel = GLOBAL.require("widgets/gesturewheel")
+local GestureWheel = GLOBAL.require("widgets/itemwheel")
 
 --Variables to control the display of the wheel
 local cursorx = 0
