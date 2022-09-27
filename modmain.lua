@@ -239,9 +239,19 @@ local function ResetTransform()
 end
 
 local function ShowGestureWheel(controller_mode)
-	if keydown then return end
-	if type(GLOBAL.ThePlayer) ~= "table" or type(GLOBAL.ThePlayer.HUD) ~= "table" then return end
-	if not CanUseGestureWheel() then return end
+	print("attempting to show gesture wheel")
+	if keydown then 
+		print('keydown was true..?')
+		return 
+	end
+	if type(GLOBAL.ThePlayer) ~= "table" or type(GLOBAL.ThePlayer.HUD) ~= "table" then 
+		print("the player is NOT a... table?")
+		return 
+	end
+	if not CanUseGestureWheel() then 
+		print("cannot use gesture wheel")
+		return 
+	end
 	
 	keydown = true
 	SetModHUDFocus("GestureWheel", true)
@@ -305,6 +315,23 @@ local function HideGestureWheel(delay_focus_loss)
 	end
 end
 
+-- AddComponentPostInit("playercontroller", function(self)
+-- 	-- bullshit
+-- 	self.enabled_override = true
+-- 	local enabled_old = self.IsEnabled
+-- 	self.IsEnabled = function(self, ...)
+-- 		if not self.enabled_override then return false end
+-- 		return enabled_old(self, ...)
+-- 	end
+
+-- 	-- actual code
+-- 	local is_R2_pressed = GLOBAL.TheInput:IsControlPressed(GLOBAL.CONTROL_OPEN_INVENTORY)
+-- 	if is_R2_pressed then 
+-- 		print("yooBroo")
+-- 		ShowGestureWheel(true)
+-- 	end
+-- end)
+
 local handlers_applied = false
 local function AddGestureWheel(self)
 	BuildEmoteSets() --delay this so that the account item checks are more likely to work
@@ -318,6 +345,7 @@ local function AddGestureWheel(self)
 	gesturewheel:Hide()
 	
 	if not handlers_applied then
+		-- APPLY HANDLERS TO OPEN / CLOSE WHEEL
 		-- Keyboard controls
 		GLOBAL.TheInput:AddKeyDownHandler(KEYBOARDTOGGLEKEY, ShowGestureWheel)
 		GLOBAL.TheInput:AddKeyUpHandler(KEYBOARDTOGGLEKEY, HideGestureWheel)
@@ -326,10 +354,13 @@ local function AddGestureWheel(self)
 		-- This is pressing the left stick in
 		-- CONTROL_MENU_MISC_3 is the same thing as CONTROL_OPEN_DEBUG_MENU
 		-- CONTROL_MENU_MISC_4 is the right stick click
-		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_3, function(down)
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_OPEN_INVENTORY, function(down)
+			print("control handler fired")
 			if down then
+				print("was down")
 				ShowGestureWheel(true)
 			else
+				print("was not down")
 				HideGestureWheel(true)
 			end
 		end)
@@ -361,7 +392,7 @@ local function AddGestureWheel(self)
 		handlers_applied = true
 	end
 end
-AddClassPostConstruct( "widgets/controls", AddGestureWheel )
+AddClassPostConstruct( "widgets/controls", AddGestureWheel)
 
 --Patch the class definition directly instead of each new instance
 local Controls = GLOBAL.require("widgets/controls")
