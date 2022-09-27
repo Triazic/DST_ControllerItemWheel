@@ -257,6 +257,7 @@ local function ShowGestureWheel(controller_mode)
 	
 	keydown = true
 	SetModHUDFocus("GestureWheel", true)
+	GLOBAL.ThePlayer.HUD.controls:HideCraftingAndInventory()
 	-- GLOBAL.PlayerController:Deactivate() -- playercontroller not defined
 	-- inventoryBar:Hide() -- fucking numptys, doesn't work.
 	using_gesture_wheel = true
