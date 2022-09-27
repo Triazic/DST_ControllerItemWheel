@@ -1,1 +1,3 @@
 EnableModDebugPrint()
+DisableModDisabling()
+DisableLocalModWarning()
