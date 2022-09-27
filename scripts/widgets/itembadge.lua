@@ -175,25 +175,14 @@ local GestureBadge = Class(Widget, function(self, prefab, emotename, emote, imag
 	
 	if image then
 		self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
-		local _atlas = GetInventoryItemAtlas("log")
-		local item_tex = "log.tex"
-		local _atlasfilepath = resolvefilepath(_atlas)
-		local localized_name = STRINGS.NAMES[string.upper("log")] or "log"
-		local prefabData = Prefabs["log"]
-		print(_atlas)
+		local item_tex, _atlasfilepath, localized_name = GetImageAsset("log")
 		print(_atlasfilepath)
 		print(item_tex)
 		print(localized_name)
-		local atlascontains = TheSim:AtlasContains(_atlas, item_tex)
-		if atlascontains then 
-			print("true")
-		else
-			print("false")
-		end
 		local _image = self.icon:AddChild(Image(_atlasfilepath, item_tex))
-		local _position = default_position
-		_image:SetScale(_position.xyscale)	
-		_image:SetPosition(_position.offsetx, _position.offsety, 0)
+		-- local _position = default_position
+		-- _image:SetScale(_position.xyscale)	
+		-- _image:SetPosition(_position.offsetx, _position.offsety, 0)
 		
 		-- self.puppetbg = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
 		-- self.puppet = self.icon:AddChild(SkinsPuppet())
