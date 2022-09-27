@@ -100,7 +100,7 @@ function GestureWheel:OnUpdate()
 	
 	if TheInput:ControllerAttached() then
 		local xdir, ydir = GetControllerTilt(self.userightstick)
-		local deadzone = .5
+		local deadzone = .05 -- super low deadzone
 		if math.abs(xdir) >= deadzone or math.abs(ydir) >= deadzone then
 			local wheel = self.wheels[self.activewheel]
 			local dir = Vector3(xdir, ydir, 0):GetNormalized() * wheel.radius

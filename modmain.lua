@@ -368,12 +368,9 @@ local function AddGestureWheel(self)
 		-- CONTROL_MENU_MISC_3 is the same thing as CONTROL_OPEN_DEBUG_MENU
 		-- CONTROL_MENU_MISC_4 is the right stick click
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_OPEN_INVENTORY, function(down)
-			print('something happened')
 			if down then
-				print('it was down')
-				ShowGestureWheel(true)
+				return -- this case doesn't get hit anyway
 			else
-				print('it was up')
 				HideGestureWheel(true)
 			end
 		end)
@@ -382,34 +379,24 @@ local function AddGestureWheel(self)
 		local rotate_left_free = true
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_LEFT, function(down)
 			if down then
-				ShowGestureWheel(true)
+				if keydown and rotate_left_free then
+					gesturewheel:SwitchWheel(-1)
+					rotate_left_free = false
+				end
 			else
-				HideGestureWheel(true)
+				rotate_left_free = true
 			end
-			-- if down then
-			-- 	if keydown and rotate_left_free then
-			-- 		gesturewheel:SwitchWheel(-1)
-			-- 		rotate_left_free = false
-			-- 	end
-			-- else
-			-- 	rotate_left_free = true
-			-- end
 		end)
 		local rotate_right_free = true
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_RIGHT, function(down)
 			if down then
-				ShowGestureWheel(true)
+				if keydown and rotate_right_free then
+					gesturewheel:SwitchWheel(1)
+					rotate_right_free = false
+				end
 			else
-				HideGestureWheel(true)
+				rotate_right_free = true
 			end
-			-- if down then
-			-- 	if keydown and rotate_right_free then
-			-- 		gesturewheel:SwitchWheel(1)
-			-- 		rotate_right_free = false
-			-- 	end
-			-- else
-			-- 	rotate_right_free = true
-			-- end
 		end)
 		
 		handlers_applied = true
