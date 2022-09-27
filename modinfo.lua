@@ -1,5 +1,5 @@
-name = "Hello World"
-description = "My balls"
+name = "Competent Controls"
+description = "Competent controls for controller users."
 author = "Triazic"
 version = "0.0.0"
 forumthread = "/"
@@ -8,5 +8,5 @@ forumthread = "/"
 client_only_mod = true
 dont_starve_compatible = false
 reign_of_giants_compatible = false
-dst_compatible = false
+dst_compatible = true
 api_version = 10
