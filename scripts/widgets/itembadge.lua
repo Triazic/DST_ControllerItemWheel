@@ -18,95 +18,95 @@ local default_position = {
 }
 
 local positions = {
-	-- default emote exceptions
-	emoteXL_loop_dance0 = {
-		offsety = -32,
-		percent = 1,
-	},
-	emoteXL_bonesaw = {
-		offsety = -32,
-		xyscale = 0.58,
-	},
-	research = { --/joy
-		offsety = -64,
-		offsetx = 5,
-	},
-	emoteXL_kiss = {
-		offsety = -27,
-		offsetx = -15,
-		xyxyscale = 0.78,
-	},
-	emote_strikepose = {
-		offsety = -32,
-		percent = 0.4,
-	},
-	emoteXL_angry = {
-		offsety = -42,
-	},
-	emote_sleepy = {
-		xyscale = 0.78,
-		percent = 0.7,
-	},
-	emote_yawn = {
-		offsetx = 5,
-	},
-	emote_loop_sit3 = {
-		xyscale = 0.8,
-		offsety = -32,
-	},
-	emote_loop_sit4 = {
-		xyscale = 0.8,
-		offsety = -32,
-	},
-	emote_swoon = {
-		offsetx = -5,
-		offsety = -32,
-	},
-	emote_loop_toast = {
-		offsetx = -12,
-		percent = 0.9,
-	},
+	-- -- default item exceptions
+	-- emoteXL_loop_dance0 = {
+	-- 	offsety = -32,
+	-- 	percent = 1,
+	-- },
+	-- emoteXL_bonesaw = {
+	-- 	offsety = -32,
+	-- 	xyscale = 0.58,
+	-- },
+	-- research = { --/joy
+	-- 	offsety = -64,
+	-- 	offsetx = 5,
+	-- },
+	-- emoteXL_kiss = {
+	-- 	offsety = -27,
+	-- 	offsetx = -15,
+	-- 	xyxyscale = 0.78,
+	-- },
+	-- emote_strikepose = {
+	-- 	offsety = -32,
+	-- 	percent = 0.4,
+	-- },
+	-- emoteXL_angry = {
+	-- 	offsety = -42,
+	-- },
+	-- emote_sleepy = {
+	-- 	xyscale = 0.78,
+	-- 	percent = 0.7,
+	-- },
+	-- emote_yawn = {
+	-- 	offsetx = 5,
+	-- },
+	-- emote_loop_sit3 = {
+	-- 	xyscale = 0.8,
+	-- 	offsety = -32,
+	-- },
+	-- emote_loop_sit4 = {
+	-- 	xyscale = 0.8,
+	-- 	offsety = -32,
+	-- },
+	-- emote_swoon = {
+	-- 	offsetx = -5,
+	-- 	offsety = -32,
+	-- },
+	-- emote_loop_toast = {
+	-- 	offsetx = -12,
+	-- 	percent = 0.9,
+	-- },
 	
-	-- party dance mod exceptions
-	powerup = { --buffed
-		offsety = -52,
-	},
-	bedroll_sleep_loop = { --fakebed
-		offsety = -7,
-		offsetx = 10,
-	},
-	sleep_loop = { --wasted
-		offsety = -7,
-		offsetx = 10,
-	},
-	powerdown = { --pushup
-		offsety = -17,
-		offsetx = -5,
-	},
-	death = { --dead
-		offsety = -22,
-	},
-	shock = { --shocked
-		offsety = -40,
-		offsetx = 5,
-	},
-	mime = { --various different ones
-		offsety = -27,
-	},
+	-- -- party dance mod exceptions
+	-- powerup = { --buffed
+	-- 	offsety = -52,
+	-- },
+	-- bedroll_sleep_loop = { --fakebed
+	-- 	offsety = -7,
+	-- 	offsetx = 10,
+	-- },
+	-- sleep_loop = { --wasted
+	-- 	offsety = -7,
+	-- 	offsetx = 10,
+	-- },
+	-- powerdown = { --pushup
+	-- 	offsety = -17,
+	-- 	offsetx = -5,
+	-- },
+	-- death = { --dead
+	-- 	offsety = -22,
+	-- },
+	-- shock = { --shocked
+	-- 	offsety = -40,
+	-- 	offsetx = 5,
+	-- },
+	-- mime = { --various different ones
+	-- 	offsety = -27,
+	-- },
 	
-	-- old emotes mod exceptions
+	-- -- old emotes mod exceptions
 }
 --All old emotes really needed the same thing, so it's neater to do this
-local old_emotes = {"angry", "annoyed_palmdown", "annoyed_facepalm", "feet",
-					"hands", "hat", "pants", "happycheer", "sad", "waving"}
-for _,emote in ipairs(old_emotes) do
-	positions["emote_"..emote] = { offsety = -30 }
-end
+-- local old_emotes = {"angry", "annoyed_palmdown", "annoyed_facepalm", "feet",
+-- 					"hands", "hat", "pants", "happycheer", "sad", "waving"}
+-- for _,emote in ipairs(old_emotes) do
+-- 	positions["emote_"..emote] = { offsety = -30 }
+-- end
 
 --Copy over mime positioning for each of the mime anims
-for i=1,8 do
-	positions["mime"..i] = positions.mime
-end
+-- for i=1,8 do
+-- 	positions["mime"..i] = positions.mime
+-- end
 
 --Set the default value for the table to be the default positioning
 metapositions = {
