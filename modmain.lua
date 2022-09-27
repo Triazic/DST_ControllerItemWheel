@@ -258,8 +258,6 @@ local function ShowGestureWheel(controller_mode)
 	keydown = true
 	SetModHUDFocus("GestureWheel", true)
 	GLOBAL.ThePlayer.HUD.controls:HideCraftingAndInventory()
-	-- GLOBAL.PlayerController:Deactivate() -- playercontroller not defined
-	-- inventoryBar:Hide() -- fucking numptys, doesn't work.
 	using_gesture_wheel = true
 	
 	ResetTransform()
@@ -298,6 +296,7 @@ local function HideGestureWheel(delay_focus_loss)
 	end
 	
 	gesturewheel:Hide()
+	GLOBAL.ThePlayer.HUD.controls:ShowCraftingAndInventory()
 	gesturewheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
 	
 	local can_use_wheel = CanUseGestureWheel()
@@ -358,31 +357,33 @@ local function AddGestureWheel(self)
 		-- Keyboard controls
 		GLOBAL.TheInput:AddKeyDownHandler(KEYBOARDTOGGLEKEY, ShowGestureWheel)
 		GLOBAL.TheInput:AddKeyUpHandler(KEYBOARDTOGGLEKEY, HideGestureWheel)
+
+		-- fuck the opening of inventory thingo
+		GLOBAL.ThePlayer.HUD.OpenControllerInventory = function() 
+			ShowGestureWheel(true)
+		end
 		
 		-- Controller controls
 		-- This is pressing the left stick in
 		-- CONTROL_MENU_MISC_3 is the same thing as CONTROL_OPEN_DEBUG_MENU
 		-- CONTROL_MENU_MISC_4 is the right stick click
-		-- GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_OPEN_INVENTORY, function(down)
-		-- 	print("control handler fired")
-		-- 	if down then
-		-- 		print("was down")
-		-- 		ShowGestureWheel(true)
-		-- 	else
-		-- 		print("was not down")
-		-- 		HideGestureWheel(true)
-		-- 	end
-		-- end)
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_OPEN_INVENTORY, function(down)
+			print('something happened')
+			if down then
+				print('it was down')
+				ShowGestureWheel(true)
+			else
+				print('it was up')
+				HideGestureWheel(true)
+			end
+		end)
 		
 		-- this is just a lock system to make it only register one shift at a time
 		local rotate_left_free = true
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_LEFT, function(down)
-			print("control handler fired")
 			if down then
-				print("was down")
 				ShowGestureWheel(true)
 			else
-				print("was not down")
 				HideGestureWheel(true)
 			end
 			-- if down then
@@ -396,12 +397,9 @@ local function AddGestureWheel(self)
 		end)
 		local rotate_right_free = true
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_RIGHT, function(down)
-			print("control handler fired")
 			if down then
-				print("was down")
 				ShowGestureWheel(true)
 			else
-				print("was not down")
 				HideGestureWheel(true)
 			end
 			-- if down then
