@@ -1,0 +1,12 @@
+name = "Hello World"
+description = "My balls"
+author = "Triazic"
+version = "0.0.0"
+forumthread = "/"
+--icon_atlas = "modicon.xml"
+--icon = "modicon.tex"
+client_only_mod = true
+dont_starve_compatible = false
+reign_of_giants_compatible = false
+dst_compatible = false
+api_version = 10
