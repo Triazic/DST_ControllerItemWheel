@@ -1,3 +1,5 @@
+local inventoryBar = GLOBAL.require "widgets/inventorybar"
+
 Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
@@ -255,6 +257,7 @@ local function ShowGestureWheel(controller_mode)
 	
 	keydown = true
 	SetModHUDFocus("GestureWheel", true)
+	inventoryBar:CloseControllerInventory()
 	using_gesture_wheel = true
 	
 	ResetTransform()
@@ -358,7 +361,20 @@ local function AddGestureWheel(self)
 		-- This is pressing the left stick in
 		-- CONTROL_MENU_MISC_3 is the same thing as CONTROL_OPEN_DEBUG_MENU
 		-- CONTROL_MENU_MISC_4 is the right stick click
-		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_OPEN_INVENTORY, function(down)
+		-- GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_OPEN_INVENTORY, function(down)
+		-- 	print("control handler fired")
+		-- 	if down then
+		-- 		print("was down")
+		-- 		ShowGestureWheel(true)
+		-- 	else
+		-- 		print("was not down")
+		-- 		HideGestureWheel(true)
+		-- 	end
+		-- end)
+		
+		-- this is just a lock system to make it only register one shift at a time
+		local rotate_left_free = true
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_LEFT, function(down)
 			print("control handler fired")
 			if down then
 				print("was down")
@@ -367,30 +383,33 @@ local function AddGestureWheel(self)
 				print("was not down")
 				HideGestureWheel(true)
 			end
-		end)
-		
-		-- this is just a lock system to make it only register one shift at a time
-		local rotate_left_free = true
-		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_LEFT, function(down)
-			if down then
-				if keydown and rotate_left_free then
-					gesturewheel:SwitchWheel(-1)
-					rotate_left_free = false
-				end
-			else
-				rotate_left_free = true
-			end
+			-- if down then
+			-- 	if keydown and rotate_left_free then
+			-- 		gesturewheel:SwitchWheel(-1)
+			-- 		rotate_left_free = false
+			-- 	end
+			-- else
+			-- 	rotate_left_free = true
+			-- end
 		end)
 		local rotate_right_free = true
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_RIGHT, function(down)
+			print("control handler fired")
 			if down then
-				if keydown and rotate_right_free then
-					gesturewheel:SwitchWheel(1)
-					rotate_right_free = false
-				end
+				print("was down")
+				ShowGestureWheel(true)
 			else
-				rotate_right_free = true
+				print("was not down")
+				HideGestureWheel(true)
 			end
+			-- if down then
+			-- 	if keydown and rotate_right_free then
+			-- 		gesturewheel:SwitchWheel(1)
+			-- 		rotate_right_free = false
+			-- 	end
+			-- else
+			-- 	rotate_right_free = true
+			-- end
 		end)
 		
 		handlers_applied = true
