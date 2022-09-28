@@ -1,7 +1,7 @@
 name = "Gesture Wheel"
-description = "Adds a wheel selection interface for emotes, making it easier to emote."
-author = "rezecib"
-version = "1.8.2"
+description = "Radial wheel for controller users to equip equippable items ala Ratchet and Clank."
+author = "triazic"
+version = "1.8.3"
 
 forumthread = "/files/file/980-dst-gesture-wheel/"
 

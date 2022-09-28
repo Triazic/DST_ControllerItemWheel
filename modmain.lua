@@ -281,6 +281,7 @@ local function HideItemWheel(delay_focus_loss)
 end
 
 local handlers_applied = false
+local originalOpenControllerInventory = nil
 local function AddItemWheel(self)
 	controls = self -- this just makes controls available in the rest of the modmain's functions
 	if itemwheel then
@@ -298,6 +299,7 @@ local function AddItemWheel(self)
 		GLOBAL.TheInput:AddKeyUpHandler(KEYBOARDTOGGLEKEY, HideItemWheel)
 
 		-- fuck the opening of inventory thingo
+		originalOpenControllerInventory = GLOBAL.ThePlayer.HUD.OpenControllerInventory
 		GLOBAL.ThePlayer.HUD.OpenControllerInventory = function() 
 			ShowItemWheel(true)
 		end
@@ -311,6 +313,14 @@ local function AddItemWheel(self)
 				return -- this case doesn't get hit anyway
 			else
 				HideItemWheel(true)
+			end
+		end)
+
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_CONTROLLER_ACTION, function(down)
+			if ((not down) and using_gesture_wheel) then
+				-- up press of A while using wheel!
+				HideItemWheel(true)
+				originalOpenControllerInventory(GLOBAL.ThePlayer.HUD)
 			end
 		end)
 		

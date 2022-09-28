@@ -101,7 +101,7 @@ function ItemWheel:OnUpdate()
 	
 	if TheInput:ControllerAttached() then
 		local xdir, ydir = GetControllerTilt(self.userightstick)
-		local deadzone = .05 -- super low deadzone
+		local deadzone = .15 -- low deadzone
 		if math.abs(xdir) >= deadzone or math.abs(ydir) >= deadzone then
 			local wheel = self.wheels[self.activewheel]
 			local dir = Vector3(xdir, ydir, 0):GetNormalized() * wheel.radius
