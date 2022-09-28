@@ -94,6 +94,11 @@ local function GetControllerTilt(right)
 	return xdir, ydir
 end
 
+function GestureWheel:DoSomething()
+	print("doing something")
+	return
+end
+
 function GestureWheel:OnUpdate()
 	local mindist = math.huge
 	local mingesture = nil

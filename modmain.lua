@@ -273,6 +273,7 @@ local function ShowGestureWheel(controller_mode)
 		gesturewheel:SetPosition(GLOBAL.TheInput:GetScreenPosition():Get())
 	end
 	gesturewheel:SetControllerMode(controller_mode)
+	gesturewheel:DoSomething()
 	gesturewheel:Show()
 	gesturewheel:ScaleTo(STARTSCALE, NORMSCALE, .25)
 end
