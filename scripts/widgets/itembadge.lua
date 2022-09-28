@@ -165,8 +165,8 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color)
 
 	self.root = self:AddChild(Widget("root"))
 
-	self.icon = self.root:AddChild(Widget("target"))
-	self.icon:SetScale(SMALLSCALE)
+	-- self.icon = self.root:AddChild(Widget("target"))
+	-- self.icon:SetScale(SMALLSCALE)
 	self.expanded = false
 	self.color = color
 
@@ -174,6 +174,7 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color)
 	local tile = ItemTile(item)
 	self.root:AddChild(background)
 	self.root:AddChild(tile)
+	-- self.background = background
 
 	-- if image then
 	-- 	self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
@@ -200,21 +201,21 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color)
 end)
 
 function ItemBadge:Expand()
-	-- -- focusses a badge. icon becomes larger, turns green
-	-- if self.expanded then return end
-	-- self.expanded = true
-	-- self.icon:ScaleTo(SMALLSCALE, LARGESCALE, .25)
-	-- if self.text then self.bg:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
-	-- self:MoveToFront()
+	-- focusses a badge. 
+	if self.expanded then return end
+	self.expanded = true
+	self.root:ScaleTo(SMALLSCALE, LARGESCALE, .25)
+	-- self.background:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
+	self:MoveToFront()
 end
 
 function ItemBadge:Contract()
-	-- -- unfocusses a badge (default state)
-	-- if not self.expanded then return end
-	-- self.expanded = false
-	-- self.icon:ScaleTo(LARGESCALE, SMALLSCALE, .25)
-	-- if self.text then self.bg:SetTint(unpack(self.color)) end
-	-- self:MoveToBack()
+	-- unfocusses a badge (default state)
+	if not self.expanded then return end
+	self.expanded = false
+	self.root:ScaleTo(LARGESCALE, SMALLSCALE, .25)
+	-- self.background:SetTint(unpack(self.color)) end
+	self:MoveToBack()
 end
 
 return ItemBadge
