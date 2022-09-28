@@ -156,7 +156,9 @@ local function GetImageAsset(prefab)
 	return item_tex, resolvefilepath(atlas), localized_name
 end
 
-local ItemBadge = Class(Widget, function(self, prefab, image, text, color)
+local ItemBadge = Class(Widget, function(self, item, image, text, color)
+	local prefab = item.prefab
+
 	Widget._ctor(self, "ItemBadge-"..prefab)
 	self.isFE = false
 	self:SetClickable(false)
@@ -167,6 +169,7 @@ local ItemBadge = Class(Widget, function(self, prefab, image, text, color)
 	self.icon:SetScale(SMALLSCALE)
 	self.expanded = false
 	self.color = color
+
 
 	if image then
 		self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
