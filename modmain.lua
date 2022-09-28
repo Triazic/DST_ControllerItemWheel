@@ -282,7 +282,15 @@ local function HideItemWheel(delay_focus_loss)
 	if itemwheel.activeitem then -- actually an active item
 		-- GLOBAL.TheNet:SendSlashCmdToServer(itemwheel.activeitem, true)
 		print("action fired")
-		print(tostring(itemwheel.activeitem))
+		local itemIndex = itemwheel.activeitem -- NOT SAFE, WILL PROBABLY FUCK UP WHEN MULTIPLE WHEELS
+		print(itemIndex)
+		local item = GLOBAL.ThePlayer.components.inventory:GetItemInSlot(itemIndex)
+		if item == nil then 
+			print("item is nil somehow, index was:")
+			print(tostring(itemIndex))
+			return
+		end
+		print(item.prefab)
 	end
 end
 
