@@ -1,3 +1,18 @@
+local function GetNumberOfItemsInInventory()
+	return GLOBAL.ThePlayer.components.inventory:NumItems()
+end
+
+local function PrintEachItemInInventory(numItems)
+	GLOBAL.ThePlayer.components.inventory:ForEachItem(function(item)
+		local isStackable = item.components.stackable ~= nil
+		if isStackable then
+			local stackSize = item.components.stackable:StackSize()
+			print(tostring(item.prefab))
+			print(tostring(stackSize))
+		end
+	end)
+end
+
 Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
@@ -135,6 +150,28 @@ end
 
 local item_sets = {}
 
+local function ActuallyBuildItemSets()
+	local actual_item_sets = {}
+	
+	local defaultitemset = {}
+	local allitems = GLOBAL.ThePlayer.components.inventory:FindItems(function() return true end)
+	for i, item in ipairs(allitems) do 
+		defaultitemset[i] = item
+	end
+	
+	table.insert(
+		actual_item_sets, 
+		{
+			name = "default",
+			emotes = defaultitemset,
+			radius = ONLYEIGHT and 250 or 325,
+			color = GLOBAL.BROWN,
+		}
+	)
+
+	return actual_item_sets
+end
+
 local function BuildItemSets()
 	item_sets = {}
 	
@@ -269,6 +306,11 @@ local function ShowItemWheel(controller_mode)
 		gesturewheel:SetPosition(GLOBAL.TheInput:GetScreenPosition():Get())
 	end
 	gesturewheel:SetControllerMode(controller_mode)
+	local actualItemSets = ActuallyBuildItemSets()
+	for i, itemSet in ipairs(actualItemSets) do 
+		print(itemSet.name)
+	end
+	
 	gesturewheel:UpdateItems(item_sets, SHOWIMAGE, SHOWTEXT)
 	gesturewheel:Show()
 	gesturewheel:ScaleTo(STARTSCALE, NORMSCALE, .25)
