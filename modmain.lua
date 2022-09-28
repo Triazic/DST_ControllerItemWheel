@@ -357,7 +357,7 @@ local function AddItemWheel(self)
 	if gesturewheel then
 		gesturewheel:Kill()
 	end
-	gesturewheel = controls:AddChild(ItemWheel(item_sets, SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
+	gesturewheel = controls:AddChild(ItemWheel(SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
 	controls.gesturewheel = gesturewheel
 	ResetTransform()
 	gesturewheel:Hide()

@@ -40,7 +40,7 @@ local function construct(self, item_sets, image, text)
 	end
 end
 
-local ItemWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
+local ItemWheel = Class(Widget, function(self, image, text, rightstick)
 	Widget._ctor(self, "ItemWheel")
 	self.isFE = false
 	self:SetClickable(false)
@@ -48,17 +48,6 @@ local ItemWheel = Class(Widget, function(self, item_sets, image, text, rightstic
 	self.screenscalefactor = 1
 	self.controllermode = false
 	self.root = self:AddChild(Widget("root"))
-
-	construct(self, item_sets, image, text)
-	
-	-- self.controllerhints = self:AddChild(Widget("controllerhintsroot"))
-	-- local controller_id = TheInput:GetControllerID()
-	-- self.innerhint = self.controllerhints:AddChild(Text(UIFONT, 30))
-	-- self.innerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_RIGHT))
-	-- self.outerhint = self.controllerhints:AddChild(Text(UIFONT, 30))
-	-- self.outerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_LEFT))
-	-- self.outerhint:SetPosition(-1*item_sets[1].radius - 100, 0)
-	-- self.controllerhints:Hide()
 end)
 
 local function GetMouseDistance(self, gesture, mouse)
@@ -167,13 +156,8 @@ function ItemWheel:SetControllerMode(enabled)
 	if self.controllermode ~= enabled then
 		self.controllermode = enabled
 		local alpha = enabled and 0.25 or 1
-		for i,wheel in pairs(self.wheels) do
-			SetWheelAlpha(wheel, i == self.activewheel and 1 or alpha)
-		end
-		-- if enabled then
-		-- 	self.controllerhints:Show()
-		-- else
-		-- 	self.controllerhints:Hide()
+		-- for i,wheel in pairs(self.wheels) do
+		-- 	SetWheelAlpha(wheel, i == self.activewheel and 1 or alpha)
 		-- end
 	end
 end
