@@ -1,6 +1,6 @@
 local Widget = require "widgets/widget"
 local Text = require "widgets/text"
-local GestureBadge = require("widgets/itembadge")
+local ItemBadge = require("widgets/itembadge")
 
 local GestureWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
 	Widget._ctor(self, "GestureWheel")
@@ -30,7 +30,7 @@ local GestureWheel = Class(Widget, function(self, item_sets, image, text, rights
 		local theta = 0
 		wheel.gestures = {}
 		for i,v in ipairs(emotes) do
-			local gesture = wheel:AddChild(GestureBadge(ThePlayer.prefab, v.name, v.anim, image, text, color))
+			local gesture = wheel:AddChild(ItemBadge(ThePlayer.prefab, v.name, v.anim, image, text, color))
 			gesture:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
 			gesture:SetScale(scale)
 			self.gestures[v.name] = gesture

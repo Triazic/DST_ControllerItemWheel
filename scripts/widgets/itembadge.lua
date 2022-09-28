@@ -155,8 +155,8 @@ local function GetImageAsset(prefab)
 	return item_tex, resolvefilepath(atlas), localized_name
 end
 
-local GestureBadge = Class(Widget, function(self, prefab, emotename, emote, image, text, color)
-	Widget._ctor(self, "GestureBadge-"..emotename)
+local ItemBadge = Class(Widget, function(self, prefab, emotename, emote, image, text, color)
+	Widget._ctor(self, "ItemBadge-"..emotename)
 	self.isFE = false
 	self:SetClickable(false)
 
@@ -215,7 +215,7 @@ local GestureBadge = Class(Widget, function(self, prefab, emotename, emote, imag
 	end
 end)
 
-function GestureBadge:RefreshSkins()
+function ItemBadge:RefreshSkins()
     if not self.puppet then return end
 	local data = TheNet:GetClientTableForUser(ThePlayer.userid)
 	self.puppet:SetSkins(
@@ -230,11 +230,11 @@ function GestureBadge:RefreshSkins()
 	self:ResetEmote()
 end
 
-function GestureBadge:GetAvatar()
+function ItemBadge:GetAvatar()
 	return "avatar_"..(self.prefabname ~= "" and self.prefabname or "unknown")..".tex"
 end
 
-function GestureBadge:ResetEmote()
+function ItemBadge:ResetEmote()
 	local emote = self.emote
 	local anim = emote.anim
 	while type(anim) == "table" do
@@ -276,7 +276,7 @@ function GestureBadge:ResetEmote()
 	end
 end
 
-function GestureBadge:Expand()
+function ItemBadge:Expand()
 	-- focusses a badge. icon becomes larger, turns green
 	if self.expanded then return end
 	self.expanded = true
@@ -286,7 +286,7 @@ function GestureBadge:Expand()
 	self:MoveToFront()
 end
 
-function GestureBadge:Contract()
+function ItemBadge:Contract()
 	-- unfocusses a badge (default state)
 	if not self.expanded then return end
 	self.expanded = false
@@ -296,4 +296,4 @@ function GestureBadge:Contract()
 	self:MoveToBack()
 end
 
-return GestureBadge
+return ItemBadge

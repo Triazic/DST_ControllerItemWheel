@@ -279,8 +279,8 @@ local function ShowGestureWheel(controller_mode)
 	ResetTransform()
 	
     if SHOWIMAGE then
-        for _,gesturebadge in pairs(gesturewheel.gestures) do
-            gesturebadge:RefreshSkins()
+        for _,ItemBadge in pairs(gesturewheel.gestures) do
+            ItemBadge:RefreshSkins()
         end
     end
 	
