@@ -15,12 +15,12 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 	local delta = -2*math.pi/count
 	local theta = math.pi/2
 	wheel.gestures = {}
-	for i, v in ipairs(emotes) do
-		local itemBadge = wheel:AddChild(ItemBadge(v, image, text, color))
+	for i, item in ipairs(emotes) do
+		local itemBadge = wheel:AddChild(ItemBadge(item, image, text, color))
 		itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
 		itemBadge:SetScale(scale)
-		self.gestures[v.name] = itemBadge
-		wheel.gestures[v.name] = itemBadge
+		self.gestures[item.myIndex] = itemBadge
+		wheel.gestures[item.myIndex] = itemBadge
 		theta = theta + delta
 	end
 end
