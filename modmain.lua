@@ -156,6 +156,7 @@ local function ActuallyBuildItemSets()
 	local defaultitemset = {}
 	local allitems = GLOBAL.ThePlayer.components.inventory:FindItems(function() return true end)
 	for i, item in ipairs(allitems) do 
+		item.myIndex = i
 		defaultitemset[i] = item
 	end
 	
