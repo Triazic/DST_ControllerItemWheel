@@ -25,27 +25,30 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 	end
 end
 
+local function construct(self, item_sets, image, text)
+	self.gestures = {}
+	self.wheels = {}
+	self.activewheel = nil
+
+	-- Sort the emote sets in order of decreasing radius
+	table.sort(item_sets, function(a,b) return a.radius > b.radius end)
+	local scale = 1
+	for _, item_set in ipairs(item_sets) do
+		build_wheel(self, item_set.name, item_set.emotes, item_set.radius, item_set.color, scale, image, text)
+		scale = scale * 0.85
+	end
+end
+
 local ItemWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
 	Widget._ctor(self, "ItemWheel")
 	self.isFE = false
 	self:SetClickable(false)
 	self.userightstick = rightstick
 	self.screenscalefactor = 1
-
+	self.controllermode = false
 	self.root = self:AddChild(Widget("root"))
 
-	self.gestures = {}
-	self.wheels = {}
-	self.activewheel = nil
-	self.controllermode = false
-
-	-- Sort the emote sets in order of decreasing radius
-	table.sort(item_sets, function(a,b) return a.radius > b.radius end)
-	local scale = 1
-	for _,emote_set in ipairs(item_sets) do
-		build_wheel(self, emote_set.name, emote_set.emotes, emote_set.radius, emote_set.color, scale, image, text)
-		scale = scale * 0.85
-	end
+	construct(self, item_sets, image, text)
 	
 	self.controllerhints = self:AddChild(Widget("controllerhintsroot"))
 	local controller_id = TheInput:GetControllerID()
