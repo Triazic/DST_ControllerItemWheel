@@ -172,8 +172,6 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color)
 
 	local background = Image(ATLAS, "avatar_bg.tex")
 	local index = item.myIndex 
-	print(tostring(index))
-	-- local slot = InvSlot(k, HUD_ATLAS, "inv_slot.tex", self.owner, self.owner.replica.inventory)
 	local tile = ItemTile(item)
 	self.root:AddChild(background)
 	self.root:AddChild(tile)
