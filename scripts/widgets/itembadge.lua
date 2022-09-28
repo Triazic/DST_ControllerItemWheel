@@ -168,12 +168,6 @@ local ItemBadge = Class(Widget, function(self, prefab, emotename, emote, image, 
 	self.expanded = false
 	self.color = color
 
-	if not table.contains(DST_CHARACTERLIST, prefab) and not table.contains(MODCHARACTERLIST, prefab) then
-		self.prefabname = "wilson"
-	else
-		self.prefabname = prefab
-	end
-	
 	if image then
 		self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
 		local item_tex, _atlasfilepath, localized_name = GetImageAsset("log")
@@ -207,7 +201,6 @@ function ItemBadge:Expand()
 	if self.expanded then return end
 	self.expanded = true
 	self.icon:ScaleTo(SMALLSCALE, LARGESCALE, .25)
-	if self.puppetframe then self.puppetframe:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
 	if self.text then self.bg:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
 	self:MoveToFront()
 end
@@ -217,7 +210,6 @@ function ItemBadge:Contract()
 	if not self.expanded then return end
 	self.expanded = false
 	self.icon:ScaleTo(LARGESCALE, SMALLSCALE, .25)
-	if self.puppetframe then self.puppetframe:SetTint(unpack(self.color)) end
 	if self.text then self.bg:SetTint(unpack(self.color)) end
 	self:MoveToBack()
 end
