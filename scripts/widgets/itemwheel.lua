@@ -2,8 +2,8 @@ local Widget = require "widgets/widget"
 local Text = require "widgets/text"
 local ItemBadge = require("widgets/itembadge")
 
-local GestureWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
-	Widget._ctor(self, "GestureWheel")
+local ItemWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
+	Widget._ctor(self, "ItemWheel")
 	self.isFE = false
 	self:SetClickable(false)
 	self.userightstick = rightstick
@@ -17,7 +17,7 @@ local GestureWheel = Class(Widget, function(self, item_sets, image, text, rights
 	self.controllermode = false
 
 	local function build_wheel(name, emotes, radius, color, scale)
-		local wheel = self.root:AddChild(Widget("GestureWheelRoot-"..name))
+		local wheel = self.root:AddChild(Widget("ItemWheelRoot-"..name))
 		wheel:SetScale(1)
 		table.insert(self.wheels, wheel)
 		if name == "default" then
@@ -94,12 +94,12 @@ local function GetControllerTilt(right)
 	return xdir, ydir
 end
 
-function GestureWheel:DoSomething()
+function ItemWheel:DoSomething()
 	print("doing something")
 	return
 end
 
-function GestureWheel:OnUpdate()
+function ItemWheel:OnUpdate()
 	local mindist = math.huge
 	local mingesture = nil
 	
@@ -157,7 +157,7 @@ local function SetWheelAlpha(wheel, alpha)
 	end
 end
 
-function GestureWheel:SetControllerMode(enabled)
+function ItemWheel:SetControllerMode(enabled)
 	if self.controllermode ~= enabled then
 		self.controllermode = enabled
 		local alpha = enabled and 0.25 or 1
@@ -172,7 +172,7 @@ function GestureWheel:SetControllerMode(enabled)
 	end
 end
 
-function GestureWheel:SwitchWheel(delta)
+function ItemWheel:SwitchWheel(delta)
 	if self.activewheel == nil then return end
 	local oldwheel = self.activewheel
 	self.activewheel = math.max(1, math.min(self.activewheel + delta, #self.wheels))
@@ -186,4 +186,4 @@ function GestureWheel:SwitchWheel(delta)
 	end
 end
 
-return GestureWheel
+return ItemWheel

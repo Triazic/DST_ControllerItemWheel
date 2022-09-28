@@ -202,7 +202,7 @@ end
 
 --All code below is for handling the wheel
 
-local GestureWheel = GLOBAL.require("widgets/itemwheel")
+local ItemWheel = GLOBAL.require("widgets/itemwheel")
 
 --Variables to control the display of the wheel
 local cursorx = 0
@@ -216,7 +216,7 @@ local using_gesture_wheel = false
 local NORMSCALE = nil
 local STARTSCALE = nil
 
-local function CanUseGestureWheel()
+local function CanUseItemWheel()
 	local screen = GLOBAL.TheFrontEnd:GetActiveScreen()
 	screen = (screen and type(screen.name) == "string") and screen.name or ""
 	if screen:find("HUD") == nil or not GLOBAL.ThePlayer then
@@ -238,7 +238,7 @@ local function ResetTransform()
 	gesturewheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
 end
 
-local function ShowGestureWheel(controller_mode)
+local function ShowItemWheel(controller_mode)
 	print("attempting to show gesture wheel")
 	if keydown then 
 		print('keydown was true..?')
@@ -248,13 +248,13 @@ local function ShowGestureWheel(controller_mode)
 		print("the player is NOT a... table?")
 		return 
 	end
-	if not CanUseGestureWheel() then 
+	if not CanUseItemWheel() then 
 		print("cannot use gesture wheel")
 		return 
 	end
 	
 	keydown = true
-	SetModHUDFocus("GestureWheel", true)
+	SetModHUDFocus("ItemWheel", true)
 	GLOBAL.ThePlayer.HUD.controls:HideCraftingAndInventory()
 	using_gesture_wheel = true
 	
@@ -278,21 +278,21 @@ local function ShowGestureWheel(controller_mode)
 	gesturewheel:ScaleTo(STARTSCALE, NORMSCALE, .25)
 end
 
-local function HideGestureWheel(delay_focus_loss)
+local function HideItemWheel(delay_focus_loss)
 	if type(GLOBAL.ThePlayer) ~= "table" or type(GLOBAL.ThePlayer.HUD) ~= "table" then return end
 	keydown = false
 	if delay_focus_loss and gesturewheel.activegesture then
 		--delay a little on controllers to prevent canceling the emote by moving
-		GLOBAL.ThePlayer:DoTaskInTime(0.5, function() SetModHUDFocus("GestureWheel", false) end)
+		GLOBAL.ThePlayer:DoTaskInTime(0.5, function() SetModHUDFocus("ItemWheel", false) end)
 	else
-		SetModHUDFocus("GestureWheel", false)
+		SetModHUDFocus("ItemWheel", false)
 	end
 	
 	gesturewheel:Hide()
 	GLOBAL.ThePlayer.HUD.controls:ShowCraftingAndInventory()
 	gesturewheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
 	
-	local can_use_wheel = CanUseGestureWheel()
+	local can_use_wheel = CanUseItemWheel()
 	using_gesture_wheel = false
 	if not can_use_wheel then return end
 	
@@ -325,7 +325,7 @@ end
 -- 	local is_R2_pressed = GLOBAL.TheInput:IsControlPressed(GLOBAL.CONTROL_OPEN_INVENTORY)
 -- 	if is_R2_pressed then 
 -- 		print("yooBroo")
--- 		ShowGestureWheel(true)
+-- 		ShowItemWheel(true)
 -- 	end
 -- end)
 
@@ -334,13 +334,13 @@ end
 -- end
 
 local handlers_applied = false
-local function AddGestureWheel(self)
+local function AddItemWheel(self)
 	BuildItemSets() --delay this so that the account item checks are more likely to work
 	controls = self -- this just makes controls available in the rest of the modmain's functions
 	if gesturewheel then
 		gesturewheel:Kill()
 	end
-	gesturewheel = controls:AddChild(GestureWheel(item_sets, SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
+	gesturewheel = controls:AddChild(ItemWheel(item_sets, SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
 	controls.gesturewheel = gesturewheel
 	ResetTransform()
 	gesturewheel:Hide()
@@ -348,12 +348,12 @@ local function AddGestureWheel(self)
 	if not handlers_applied then
 		-- APPLY HANDLERS TO OPEN / CLOSE WHEEL
 		-- Keyboard controls
-		GLOBAL.TheInput:AddKeyDownHandler(KEYBOARDTOGGLEKEY, ShowGestureWheel)
-		GLOBAL.TheInput:AddKeyUpHandler(KEYBOARDTOGGLEKEY, HideGestureWheel)
+		GLOBAL.TheInput:AddKeyDownHandler(KEYBOARDTOGGLEKEY, ShowItemWheel)
+		GLOBAL.TheInput:AddKeyUpHandler(KEYBOARDTOGGLEKEY, HideItemWheel)
 
 		-- fuck the opening of inventory thingo
 		GLOBAL.ThePlayer.HUD.OpenControllerInventory = function() 
-			ShowGestureWheel(true)
+			ShowItemWheel(true)
 		end
 		
 		-- Controller controls
@@ -364,7 +364,7 @@ local function AddGestureWheel(self)
 			if down then
 				return -- this case doesn't get hit anyway
 			else
-				HideGestureWheel(true)
+				HideItemWheel(true)
 			end
 		end)
 		
@@ -395,7 +395,7 @@ local function AddGestureWheel(self)
 		handlers_applied = true
 	end
 end
-AddClassPostConstruct( "widgets/controls", AddGestureWheel)
+AddClassPostConstruct( "widgets/controls", AddItemWheel)
 
 --Patch the class definition directly instead of each new instance
 local Controls = GLOBAL.require("widgets/controls")
@@ -412,7 +412,7 @@ Controls.OnUpdate = OnUpdate
 AddClassPostConstruct("screens/giftitempopup", function(self)
 	local function ScheduleRebuild()
 		--give it a little time to update the skin inventory
-		controls.owner:DoTaskInTime(5, function() AddGestureWheel(controls) end)
+		controls.owner:DoTaskInTime(5, function() AddItemWheel(controls) end)
 	end
 	local OldOnClose = self.OnClose
 	function self:OnClose(...)
