@@ -2,20 +2,6 @@ local Widget = require "widgets/widget"
 local Text = require "widgets/text"
 local ItemBadge = require("widgets/itembadge")
 
-local function GetNumberOfItemsInInventory()
-	return GLOBAL.ThePlayer.components.inventory:NumItems()
-end
-
-local function PrintEachItemInInventory(numItems)
-	GLOBAL.ThePlayer.components.inventory:ForEachItem(function(item)
-		local isStackable = item.components.stackable ~= nil
-		if isStackable then
-			local stackSize = item.components.stackable:StackSize()
-			print(tostring(item.prefab))
-			print(tostring(stackSize))
-		end
-	end)
-end
 local GestureWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
 	Widget._ctor(self, "GestureWheel")
 	self.isFE = false
