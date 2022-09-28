@@ -239,17 +239,13 @@ local function ResetTransform()
 end
 
 local function ShowItemWheel(controller_mode)
-	print("attempting to show gesture wheel")
 	if keydown then 
-		print('keydown was true..?')
 		return 
 	end
 	if type(GLOBAL.ThePlayer) ~= "table" or type(GLOBAL.ThePlayer.HUD) ~= "table" then 
-		print("the player is NOT a... table?")
 		return 
 	end
 	if not CanUseItemWheel() then 
-		print("cannot use gesture wheel")
 		return 
 	end
 	
@@ -273,7 +269,7 @@ local function ShowItemWheel(controller_mode)
 		gesturewheel:SetPosition(GLOBAL.TheInput:GetScreenPosition():Get())
 	end
 	gesturewheel:SetControllerMode(controller_mode)
-	gesturewheel:DoSomething()
+	gesturewheel:UpdateItems(item_sets, SHOWIMAGE, SHOWTEXT)
 	gesturewheel:Show()
 	gesturewheel:ScaleTo(STARTSCALE, NORMSCALE, .25)
 end
@@ -311,27 +307,6 @@ local function HideItemWheel(delay_focus_loss)
 		GLOBAL.TheNet:SendSlashCmdToServer(gesturewheel.activegesture, true)
 	end
 end
-
--- AddComponentPostInit("playercontroller", function(self)
--- 	-- bullshit
--- 	self.enabled_override = true
--- 	local enabled_old = self.IsEnabled
--- 	self.IsEnabled = function(self, ...)
--- 		if not self.enabled_override then return false end
--- 		return enabled_old(self, ...)
--- 	end
-
--- 	-- actual code
--- 	local is_R2_pressed = GLOBAL.TheInput:IsControlPressed(GLOBAL.CONTROL_OPEN_INVENTORY)
--- 	if is_R2_pressed then 
--- 		print("yooBroo")
--- 		ShowItemWheel(true)
--- 	end
--- end)
-
--- GLOBAL.PlayerHud.OpenControllerInventory = function()
--- 	print("I overrode the bullshit")
--- end
 
 local handlers_applied = false
 local function AddItemWheel(self)

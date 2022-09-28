@@ -171,9 +171,6 @@ local ItemBadge = Class(Widget, function(self, prefab, image, text, color)
 	if image then
 		self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
 		local item_tex, _atlasfilepath, localized_name = GetImageAsset("log")
-		print(_atlasfilepath)
-		print(item_tex)
-		print(localized_name)
 		local _image = self.icon:AddChild(Image(_atlasfilepath, item_tex))
 	end
 	

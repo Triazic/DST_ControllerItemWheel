@@ -99,8 +99,9 @@ local function GetControllerTilt(right)
 	return xdir, ydir
 end
 
-function ItemWheel:DoSomething()
-	print("doing something")
+function ItemWheel:UpdateItems(item_sets, image, text)
+	print("reconstruct")
+	construct(self, item_sets, image, text)
 	return
 end
 
