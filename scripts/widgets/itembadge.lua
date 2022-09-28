@@ -170,7 +170,9 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color)
 	self.expanded = false
 	self.color = color
 
+	local background = Image(ATLAS, "avatar_bg.tex")
 	local tile = ItemTile(item)
+	self.root:AddChild(background)
 	self.root:AddChild(tile)
 
 	-- if image then
