@@ -243,8 +243,14 @@ local function GetNumberOfItemsInInventory()
 end
 
 local function PrintEachItemInInventory(numItems)
-	GLOBAL.ThePlayer.components.inventory:ForEachItem(function(v) 
-		print(v.prefab)
+	GLOBAL.ThePlayer.components.inventory:ForEachItem(function(item)
+		local isStackable = item.components.stackable ~= nil
+		if isStackable then
+			local stackSize = item.components.stackable:StackSize()
+			print(tostring(item.prefab))
+			print(tostring(stackSize))
+		end
+		
 	end)
 end
 
