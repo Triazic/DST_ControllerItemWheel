@@ -292,6 +292,8 @@ local function HideItemWheel(delay_focus_loss)
 			return
 		end
 		print(item.prefab)
+		print("attempt to equip")
+		GLOBAL.ThePlayer.components.inventory:Equip(item)
 	end
 end
 
