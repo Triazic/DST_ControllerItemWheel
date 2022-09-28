@@ -8,7 +8,7 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 	table.insert(self.wheels, wheel)
 	if name == "default" then
 		self.activewheel = #self.wheels
-	end
+	end 
 	local count = #emotes
 	radius = radius * scale
 	wheel.radius = radius
