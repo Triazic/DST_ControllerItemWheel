@@ -232,9 +232,6 @@ local function ShowItemWheel(controller_mode)
 	end
 	itemwheel:SetControllerMode(controller_mode)
 	local actualItemSets = ActuallyBuildItemSets()
-	-- for i, itemSet in ipairs(actualItemSets) do 
-	-- 	print(itemSet.name)
-	-- end
 	
 	itemwheel:UpdateItems(actualItemSets, SHOWIMAGE, SHOWTEXT)
 	itemwheel:Show()
@@ -271,10 +268,7 @@ local function HideItemWheel(delay_focus_loss)
 	end
 	
 	if itemwheel.activeitem then -- actually an active item
-		-- GLOBAL.TheNet:SendSlashCmdToServer(itemwheel.activeitem, true)
-		print("action fired")
 		local itemIndex = itemwheel.activeitem -- NOT SAFE, WILL PROBABLY FUCK UP WHEN MULTIPLE WHEELS
-		print(itemIndex)
 		--local item = GLOBAL.ThePlayer.components.inventory:GetItemInSlot(itemIndex)
 		local item = itemwheel.actualItems[itemIndex]
 		if item == nil then 
@@ -282,8 +276,6 @@ local function HideItemWheel(delay_focus_loss)
 			print(tostring(itemIndex))
 			return
 		end
-		print(item.prefab)
-		print("attempt to equip")
 		GLOBAL.ThePlayer.components.inventory:Equip(item)
 	end
 end
