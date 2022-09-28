@@ -3,6 +3,7 @@ local Widget = require "widgets/widget"
 local UIAnim = require "widgets/uianim"
 local SkinsPuppet = require "widgets/skinspuppet"
 local Text = require "widgets/text"
+local ItemTile = "widgets/ìtemtile"
 
 local ATLAS = "images/avatars.xml"
 
