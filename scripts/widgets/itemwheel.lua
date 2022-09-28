@@ -113,7 +113,7 @@ function ItemWheel:OnUpdate()
 			end
 		else
 			mingesture = nil
-			self.activegesture = nil		
+			self.activeitem = nil		
 		end
 	else
 		--find the gesture closest to the mouse
@@ -128,14 +128,14 @@ function ItemWheel:OnUpdate()
 		-- make sure the mouse isn't still close to the center of the gesture wheel
 		if GetMouseDistance(self, nil, mouse) < mindist then
 			mingesture = nil
-			self.activegesture = nil
+			self.activeitem = nil
 		end
 	end
 	
 	for k,v in pairs(self.gestures) do
 		if k == mingesture then
 			v:Expand()
-			self.activegesture = k
+			self.activeitem = k
 		else
 			v:Contract()
 		end
@@ -166,9 +166,9 @@ function ItemWheel:SwitchWheel(delta)
 	local oldwheel = self.activewheel
 	self.activewheel = math.max(1, math.min(self.activewheel + delta, #self.wheels))
 	if oldwheel ~= self.activewheel then
-		if self.activegesture ~= nil then
-			self.gestures[self.activegesture]:Contract()
-			self.activegesture = nil
+		if self.activeitem ~= nil then
+			self.gestures[self.activeitem]:Contract()
+			self.activeitem = nil
 		end
 		SetWheelAlpha(self.wheels[oldwheel], 0.25)
 		SetWheelAlpha(self.wheels[self.activewheel], 1)

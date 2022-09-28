@@ -253,7 +253,7 @@ end
 local function HideItemWheel(delay_focus_loss)
 	if type(GLOBAL.ThePlayer) ~= "table" or type(GLOBAL.ThePlayer.HUD) ~= "table" then return end
 	keydown = false
-	if delay_focus_loss and gesturewheel.activegesture then
+	if delay_focus_loss and gesturewheel.activeitem then
 		--delay a little on controllers to prevent canceling the emote by moving
 		GLOBAL.ThePlayer:DoTaskInTime(0.5, function() SetModHUDFocus("ItemWheel", false) end)
 	else
@@ -279,10 +279,10 @@ local function HideItemWheel(delay_focus_loss)
 		GLOBAL.TheInputProxy:SetOSCursorPos(cursorx, cursory)
 	end
 	
-	if gesturewheel.activegesture then -- actually an active item
-		-- GLOBAL.TheNet:SendSlashCmdToServer(gesturewheel.activegesture, true)
+	if gesturewheel.activeitem then -- actually an active item
+		-- GLOBAL.TheNet:SendSlashCmdToServer(gesturewheel.activeitem, true)
 		print("action fired")
-		print(tostring(gesturewheel.activegesture))
+		print(tostring(gesturewheel.activeitem))
 	end
 end
 
