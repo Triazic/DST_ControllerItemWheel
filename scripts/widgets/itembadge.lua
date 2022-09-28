@@ -158,8 +158,9 @@ end
 
 local ItemBadge = Class(Widget, function(self, item, image, text, color)
 	local prefab = item.prefab
+	local index = item.myIndex 
 
-	Widget._ctor(self, "ItemBadge-"..prefab)
+	Widget._ctor(self, "ItemBadge-"..tostring(index))
 	self.isFE = false
 	self:SetClickable(false)
 
@@ -168,14 +169,11 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color)
 	-- self.icon = self.root:AddChild(Widget("target"))
 	-- self.icon:SetScale(SMALLSCALE)
 	self.expanded = false
-	self.color = color
+	self.color = PLAYERCOLOURS.EGGSHELL
 
-	local background = Image(ATLAS, "avatar_bg.tex")
-	local index = item.myIndex 
-	local tile = ItemTile(item)
-	self.root:AddChild(background)
-	self.root:AddChild(tile)
-	-- self.background = background
+	self.background = self.root:AddChild(Image(ATLAS, "avatar_bg.tex"))
+	self.background:SetTint(unpack(self.color))
+	self.tile = self.root:AddChild(ItemTile(item))
 
 	-- if image then
 	-- 	self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
@@ -206,7 +204,7 @@ function ItemBadge:Expand()
 	if self.expanded then return end
 	self.expanded = true
 	self.root:ScaleTo(SMALLSCALE, LARGESCALE, .25)
-	-- self.background:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
+	self.background:SetTint(unpack(PLAYERCOLOURS.GREEN))
 	self:MoveToFront()
 end
 
@@ -215,7 +213,7 @@ function ItemBadge:Contract()
 	if not self.expanded then return end
 	self.expanded = false
 	self.root:ScaleTo(LARGESCALE, SMALLSCALE, .25)
-	-- self.background:SetTint(unpack(self.color)) end
+	self.background:SetTint(unpack(self.color))
 	self:MoveToBack()
 end
 

@@ -89,7 +89,6 @@ local function GetControllerTilt(right)
 end
 
 function ItemWheel:UpdateItems(item_sets, image, text)
-	print("reconstruct")
 	construct(self, item_sets, image, text)
 	return
 end
