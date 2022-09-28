@@ -307,11 +307,11 @@ local function ShowItemWheel(controller_mode)
 	end
 	gesturewheel:SetControllerMode(controller_mode)
 	local actualItemSets = ActuallyBuildItemSets()
-	for i, itemSet in ipairs(actualItemSets) do 
-		print(itemSet.name)
-	end
+	-- for i, itemSet in ipairs(actualItemSets) do 
+	-- 	print(itemSet.name)
+	-- end
 	
-	gesturewheel:UpdateItems(item_sets, SHOWIMAGE, SHOWTEXT)
+	gesturewheel:UpdateItems(actualItemSets, SHOWIMAGE, SHOWTEXT)
 	gesturewheel:Show()
 	gesturewheel:ScaleTo(STARTSCALE, NORMSCALE, .25)
 end

@@ -15,8 +15,8 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 	local delta = 2*math.pi/count
 	local theta = 0
 	wheel.gestures = {}
-	for i,v in ipairs(emotes) do
-		local itemBadge = wheel:AddChild(ItemBadge("log", image, text, color))
+	for i, v in ipairs(emotes) do
+		local itemBadge = wheel:AddChild(ItemBadge(v.prefab or "log", image, text, color))
 		itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
 		itemBadge:SetScale(scale)
 		self.gestures[v.name] = itemBadge
@@ -51,14 +51,14 @@ local ItemWheel = Class(Widget, function(self, item_sets, image, text, rightstic
 
 	construct(self, item_sets, image, text)
 	
-	self.controllerhints = self:AddChild(Widget("controllerhintsroot"))
-	local controller_id = TheInput:GetControllerID()
-	self.innerhint = self.controllerhints:AddChild(Text(UIFONT, 30))
-	self.innerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_RIGHT))
-	self.outerhint = self.controllerhints:AddChild(Text(UIFONT, 30))
-	self.outerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_LEFT))
-	self.outerhint:SetPosition(-1*item_sets[1].radius - 100, 0)
-	self.controllerhints:Hide()
+	-- self.controllerhints = self:AddChild(Widget("controllerhintsroot"))
+	-- local controller_id = TheInput:GetControllerID()
+	-- self.innerhint = self.controllerhints:AddChild(Text(UIFONT, 30))
+	-- self.innerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_RIGHT))
+	-- self.outerhint = self.controllerhints:AddChild(Text(UIFONT, 30))
+	-- self.outerhint:SetString(TheInput:GetLocalizedControl(controller_id, CONTROL_ROTATE_LEFT))
+	-- self.outerhint:SetPosition(-1*item_sets[1].radius - 100, 0)
+	-- self.controllerhints:Hide()
 end)
 
 local function GetMouseDistance(self, gesture, mouse)
@@ -170,11 +170,11 @@ function ItemWheel:SetControllerMode(enabled)
 		for i,wheel in pairs(self.wheels) do
 			SetWheelAlpha(wheel, i == self.activewheel and 1 or alpha)
 		end
-		if enabled then
-			self.controllerhints:Show()
-		else
-			self.controllerhints:Hide()
-		end
+		-- if enabled then
+		-- 	self.controllerhints:Show()
+		-- else
+		-- 	self.controllerhints:Hide()
+		-- end
 	end
 end
 
