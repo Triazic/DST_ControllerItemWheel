@@ -3,7 +3,7 @@ local Widget = require "widgets/widget"
 local UIAnim = require "widgets/uianim"
 local SkinsPuppet = require "widgets/skinspuppet"
 local Text = require "widgets/text"
-local ItemTile = "widgets/ìtemtile"
+local ItemTile = require "widgets/itemtile"
 
 local ATLAS = "images/avatars.xml"
 
@@ -170,47 +170,49 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color)
 	self.expanded = false
 	self.color = color
 
+	local tile = ItemTile(item)
+	self.root:AddChild(tile)
 
-	if image then
-		self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
-		local item_tex, _atlasfilepath, localized_name = GetImageAsset(prefab)
-		local _image = self.icon:AddChild(Image(_atlasfilepath, item_tex))
-	end
+	-- if image then
+	-- 	self.background = self.icon:AddChild(Image(ATLAS, "avatar_bg.tex"))
+	-- 	local item_tex, _atlasfilepath, localized_name = GetImageAsset(prefab)
+	-- 	local _image = self.icon:AddChild(Image(_atlasfilepath, item_tex))
+	-- end
 	
-	if text then
-		self.bg = self.icon:AddChild(Image("images/gesture_bg.xml", "gesture_bg.tex"))
-		self.bg:SetScale(.11*(prefab:len()+1),.5,0)
-		if image then self.bg:SetPosition(-.5,-34,0) end
-		self.bg:SetTint(unpack(color))
+	-- if text then
+	-- 	self.bg = self.icon:AddChild(Image("images/gesture_bg.xml", "gesture_bg.tex"))
+	-- 	self.bg:SetScale(.11*(prefab:len()+1),.5,0)
+	-- 	if image then self.bg:SetPosition(-.5,-34,0) end
+	-- 	self.bg:SetTint(unpack(color))
 
-		self.text = self.icon:AddChild(Text(NUMBERFONT, 28))
-		self.text:SetHAlign(ANCHOR_MIDDLE)
-		if image then
-			self.text:SetPosition(3.5, -50, 0)
-		else
-			self.text:SetPosition(3.5, -18, 0)
-		end
-		self.text:SetScale(1,.78,1)
-		self.text:SetString("/"..prefab)
-	end
+	-- 	self.text = self.icon:AddChild(Text(NUMBERFONT, 28))
+	-- 	self.text:SetHAlign(ANCHOR_MIDDLE)
+	-- 	if image then
+	-- 		self.text:SetPosition(3.5, -50, 0)
+	-- 	else
+	-- 		self.text:SetPosition(3.5, -18, 0)
+	-- 	end
+	-- 	self.text:SetScale(1,.78,1)
+	-- 	self.text:SetString("/"..prefab)
+	-- end
 end)
 
 function ItemBadge:Expand()
-	-- focusses a badge. icon becomes larger, turns green
-	if self.expanded then return end
-	self.expanded = true
-	self.icon:ScaleTo(SMALLSCALE, LARGESCALE, .25)
-	if self.text then self.bg:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
-	self:MoveToFront()
+	-- -- focusses a badge. icon becomes larger, turns green
+	-- if self.expanded then return end
+	-- self.expanded = true
+	-- self.icon:ScaleTo(SMALLSCALE, LARGESCALE, .25)
+	-- if self.text then self.bg:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
+	-- self:MoveToFront()
 end
 
 function ItemBadge:Contract()
-	-- unfocusses a badge (default state)
-	if not self.expanded then return end
-	self.expanded = false
-	self.icon:ScaleTo(LARGESCALE, SMALLSCALE, .25)
-	if self.text then self.bg:SetTint(unpack(self.color)) end
-	self:MoveToBack()
+	-- -- unfocusses a badge (default state)
+	-- if not self.expanded then return end
+	-- self.expanded = false
+	-- self.icon:ScaleTo(LARGESCALE, SMALLSCALE, .25)
+	-- if self.text then self.bg:SetTint(unpack(self.color)) end
+	-- self:MoveToBack()
 end
 
 return ItemBadge
