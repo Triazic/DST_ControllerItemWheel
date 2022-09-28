@@ -279,8 +279,10 @@ local function HideItemWheel(delay_focus_loss)
 		GLOBAL.TheInputProxy:SetOSCursorPos(cursorx, cursory)
 	end
 	
-	if gesturewheel.activegesture then
-		GLOBAL.TheNet:SendSlashCmdToServer(gesturewheel.activegesture, true)
+	if gesturewheel.activegesture then -- actually an active item
+		-- GLOBAL.TheNet:SendSlashCmdToServer(gesturewheel.activegesture, true)
+		print("action fired")
+		print(tostring(gesturewheel.activegesture))
 	end
 end
 
