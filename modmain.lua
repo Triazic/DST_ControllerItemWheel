@@ -181,7 +181,7 @@ local cursory = 0
 local centerx = 0
 local centery = 0
 local controls = nil
-local gesturewheel = nil
+local itemwheel = nil
 local keydown = false
 local using_gesture_wheel = false
 local NORMSCALE = nil
@@ -202,11 +202,11 @@ local function ResetTransform()
 	centerx = math.floor(screenwidth/2 + 0.5)
 	centery = math.floor(screenheight/2 + 0.5)
 	local screenscalefactor = math.min(screenwidth/1920, screenheight/1080) --normalize by my testing setup, 1080p
-	gesturewheel.screenscalefactor = SCALEFACTOR*screenscalefactor
+	itemwheel.screenscalefactor = SCALEFACTOR*screenscalefactor
 	NORMSCALE = SCALEFACTOR*screenscalefactor
 	STARTSCALE = 0
-	gesturewheel:SetPosition(centerx, centery, 0)
-	gesturewheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
+	itemwheel:SetPosition(centerx, centery, 0)
+	itemwheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
 end
 
 local function ShowItemWheel(controller_mode)
@@ -235,34 +235,34 @@ local function ShowItemWheel(controller_mode)
 		GLOBAL.TheInputProxy:SetOSCursorPos(centerx, centery)
 	end
 	if CENTERWHEEL then
-		gesturewheel:SetPosition(centerx, centery, 0)
+		itemwheel:SetPosition(centerx, centery, 0)
 	else
-		gesturewheel:SetPosition(GLOBAL.TheInput:GetScreenPosition():Get())
+		itemwheel:SetPosition(GLOBAL.TheInput:GetScreenPosition():Get())
 	end
-	gesturewheel:SetControllerMode(controller_mode)
+	itemwheel:SetControllerMode(controller_mode)
 	local actualItemSets = ActuallyBuildItemSets()
 	-- for i, itemSet in ipairs(actualItemSets) do 
 	-- 	print(itemSet.name)
 	-- end
 	
-	gesturewheel:UpdateItems(actualItemSets, SHOWIMAGE, SHOWTEXT)
-	gesturewheel:Show()
-	gesturewheel:ScaleTo(STARTSCALE, NORMSCALE, .25)
+	itemwheel:UpdateItems(actualItemSets, SHOWIMAGE, SHOWTEXT)
+	itemwheel:Show()
+	itemwheel:ScaleTo(STARTSCALE, NORMSCALE, .25)
 end
 
 local function HideItemWheel(delay_focus_loss)
 	if type(GLOBAL.ThePlayer) ~= "table" or type(GLOBAL.ThePlayer.HUD) ~= "table" then return end
 	keydown = false
-	if delay_focus_loss and gesturewheel.activeitem then
+	if delay_focus_loss and itemwheel.activeitem then
 		--delay a little on controllers to prevent canceling the emote by moving
 		GLOBAL.ThePlayer:DoTaskInTime(0.5, function() SetModHUDFocus("ItemWheel", false) end)
 	else
 		SetModHUDFocus("ItemWheel", false)
 	end
 	
-	gesturewheel:Hide()
+	itemwheel:Hide()
 	GLOBAL.ThePlayer.HUD.controls:ShowCraftingAndInventory()
-	gesturewheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
+	itemwheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
 	
 	local can_use_wheel = CanUseItemWheel()
 	using_gesture_wheel = false
@@ -271,7 +271,7 @@ local function HideItemWheel(delay_focus_loss)
 	if RESTORECURSOR then
 		if ADJUSTCURSOR then
 			local x,y = GLOBAL.TheInputProxy:GetOSCursorPos()
-			local gx, gy = gesturewheel:GetPosition():Get()
+			local gx, gy = itemwheel:GetPosition():Get()
 			local dx, dy = x-gx, y-gy
 			cursorx = cursorx + dx
 			cursory = cursory + dy
@@ -279,23 +279,23 @@ local function HideItemWheel(delay_focus_loss)
 		GLOBAL.TheInputProxy:SetOSCursorPos(cursorx, cursory)
 	end
 	
-	if gesturewheel.activeitem then -- actually an active item
-		-- GLOBAL.TheNet:SendSlashCmdToServer(gesturewheel.activeitem, true)
+	if itemwheel.activeitem then -- actually an active item
+		-- GLOBAL.TheNet:SendSlashCmdToServer(itemwheel.activeitem, true)
 		print("action fired")
-		print(tostring(gesturewheel.activeitem))
+		print(tostring(itemwheel.activeitem))
 	end
 end
 
 local handlers_applied = false
 local function AddItemWheel(self)
 	controls = self -- this just makes controls available in the rest of the modmain's functions
-	if gesturewheel then
-		gesturewheel:Kill()
+	if itemwheel then
+		itemwheel:Kill()
 	end
-	gesturewheel = controls:AddChild(ItemWheel(SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
-	controls.gesturewheel = gesturewheel
+	itemwheel = controls:AddChild(ItemWheel(SHOWIMAGE, SHOWTEXT, RIGHTSTICK))
+	controls.itemwheel = itemwheel
 	ResetTransform()
-	gesturewheel:Hide()
+	itemwheel:Hide()
 	
 	if not handlers_applied then
 		-- APPLY HANDLERS TO OPEN / CLOSE WHEEL
@@ -325,7 +325,7 @@ local function AddItemWheel(self)
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_LEFT, function(down)
 			if down then
 				if keydown and rotate_left_free then
-					gesturewheel:SwitchWheel(-1)
+					itemwheel:SwitchWheel(-1)
 					rotate_left_free = false
 				end
 			else
@@ -336,7 +336,7 @@ local function AddItemWheel(self)
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_ROTATE_RIGHT, function(down)
 			if down then
 				if keydown and rotate_right_free then
-					gesturewheel:SwitchWheel(1)
+					itemwheel:SwitchWheel(1)
 					rotate_right_free = false
 				end
 			else
@@ -355,7 +355,7 @@ local OldOnUpdate = Controls.OnUpdate
 local function OnUpdate(self, ...)
 	OldOnUpdate(self, ...)
 	if keydown then
-		self.gesturewheel:OnUpdate()
+		self.itemwheel:OnUpdate()
 	end
 end
 Controls.OnUpdate = OnUpdate
