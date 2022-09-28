@@ -156,8 +156,8 @@ local function GetImageAsset(prefab)
 	return item_tex, resolvefilepath(atlas), localized_name
 end
 
-local ItemBadge = Class(Widget, function(self, prefab, emotename, emote, image, text, color)
-	Widget._ctor(self, "ItemBadge-"..emotename)
+local ItemBadge = Class(Widget, function(self, prefab, image, text, color)
+	Widget._ctor(self, "ItemBadge-"..prefab)
 	self.isFE = false
 	self:SetClickable(false)
 
@@ -178,9 +178,8 @@ local ItemBadge = Class(Widget, function(self, prefab, emotename, emote, image, 
 	end
 	
 	if text then
-		local _emotename = "log"
 		self.bg = self.icon:AddChild(Image("images/gesture_bg.xml", "gesture_bg.tex"))
-		self.bg:SetScale(.11*(_emotename:len()+1),.5,0)
+		self.bg:SetScale(.11*(prefab:len()+1),.5,0)
 		if image then self.bg:SetPosition(-.5,-34,0) end
 		self.bg:SetTint(unpack(color))
 
@@ -192,7 +191,7 @@ local ItemBadge = Class(Widget, function(self, prefab, emotename, emote, image, 
 			self.text:SetPosition(3.5, -18, 0)
 		end
 		self.text:SetScale(1,.78,1)
-		self.text:SetString("/".._emotename)
+		self.text:SetString("/"..prefab)
 	end
 end)
 

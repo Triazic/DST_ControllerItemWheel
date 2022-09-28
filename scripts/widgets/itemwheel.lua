@@ -44,7 +44,7 @@ local GestureWheel = Class(Widget, function(self, item_sets, image, text, rights
 		local theta = 0
 		wheel.gestures = {}
 		for i,v in ipairs(emotes) do
-			local itemBadge = wheel:AddChild(ItemBadge(ThePlayer.prefab, v.name, v.anim, image, text, color))
+			local itemBadge = wheel:AddChild(ItemBadge("log", image, text, color))
 			itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
 			itemBadge:SetScale(scale)
 			self.gestures[v.name] = itemBadge
