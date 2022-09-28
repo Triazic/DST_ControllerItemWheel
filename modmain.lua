@@ -1,18 +1,3 @@
-local function GetNumberOfItemsInInventory()
-	return GLOBAL.ThePlayer.components.inventory:NumItems()
-end
-
-local function PrintEachItemInInventory(numItems)
-	GLOBAL.ThePlayer.components.inventory:ForEachItem(function(item)
-		local isStackable = item.components.stackable ~= nil
-		if isStackable then
-			local stackSize = item.components.stackable:StackSize()
-			print(tostring(item.prefab))
-			print(tostring(stackSize))
-		end
-	end)
-end
-
 Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
