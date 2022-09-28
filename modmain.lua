@@ -260,12 +260,6 @@ local function ShowGestureWheel(controller_mode)
 	
 	ResetTransform()
 	
-    if SHOWIMAGE then
-        for _,ItemBadge in pairs(gesturewheel.gestures) do
-            ItemBadge:RefreshSkins()
-        end
-    end
-	
 	if RESTORECURSOR then
 		cursorx, cursory = GLOBAL.TheInputProxy:GetOSCursorPos()
 	end
