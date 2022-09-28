@@ -278,22 +278,22 @@ end
 
 function ItemBadge:Expand()
 	-- focusses a badge. icon becomes larger, turns green
-	if self.expanded then return end
-	self.expanded = true
-	self.icon:ScaleTo(SMALLSCALE, LARGESCALE, .25)
-	if self.puppetframe then self.puppetframe:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
-	if self.text then self.bg:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
-	self:MoveToFront()
+	-- if self.expanded then return end
+	-- self.expanded = true
+	-- self.icon:ScaleTo(SMALLSCALE, LARGESCALE, .25)
+	-- if self.puppetframe then self.puppetframe:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
+	-- if self.text then self.bg:SetTint(unpack(PLAYERCOLOURS.GREEN)) end
+	-- self:MoveToFront()
 end
 
 function ItemBadge:Contract()
 	-- unfocusses a badge (default state)
-	if not self.expanded then return end
-	self.expanded = false
-	self.icon:ScaleTo(LARGESCALE, SMALLSCALE, .25)
-	if self.puppetframe then self.puppetframe:SetTint(unpack(self.color)) end
-	if self.text then self.bg:SetTint(unpack(self.color)) end
-	self:MoveToBack()
+	-- if not self.expanded then return end
+	-- self.expanded = false
+	-- self.icon:ScaleTo(LARGESCALE, SMALLSCALE, .25)
+	-- if self.puppetframe then self.puppetframe:SetTint(unpack(self.color)) end
+	-- if self.text then self.bg:SetTint(unpack(self.color)) end
+	-- self:MoveToBack()
 end
 
 return ItemBadge
