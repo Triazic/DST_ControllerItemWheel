@@ -14,20 +14,22 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 	wheel.radius = radius
 	local delta = -2*math.pi/count
 	local theta = math.pi/2
-	wheel.gestures = {}
+	wheel.items = {}
 	for i, item in ipairs(emotes) do
 		local itemBadge = wheel:AddChild(ItemBadge(item, image, text, color))
 		itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
 		itemBadge:SetScale(scale)
-		self.gestures[item.myIndex] = itemBadge
-		wheel.gestures[item.myIndex] = itemBadge
+		self.actualItems[item.myIndex] = item
+		self.items[item.myIndex] = itemBadge
+		wheel.items[item.myIndex] = itemBadge
 		theta = theta + delta
 	end
 end
 
 local function construct(self, item_sets, image, text)
 	self.root:KillAllChildren()
-	self.gestures = {}
+	self.actualItems = {}
+	self.items = {}
 	self.wheels = {}
 	self.activewheel = nil
 
@@ -104,7 +106,7 @@ function ItemWheel:OnUpdate()
 			local wheel = self.wheels[self.activewheel]
 			local dir = Vector3(xdir, ydir, 0):GetNormalized() * wheel.radius
 			
-			for k,v in pairs(wheel.gestures) do
+			for k,v in pairs(wheel.items) do
 				local dist = GetControllerDistance(self, v, dir)
 				if dist < mindist then
 					mindist = dist
@@ -118,7 +120,7 @@ function ItemWheel:OnUpdate()
 	else
 		--find the gesture closest to the mouse
 		local mouse = TheInput:GetScreenPosition()
-		for k,v in pairs(self.gestures) do
+		for k,v in pairs(self.items) do
 			local dist = GetMouseDistance(self, v, mouse)
 			if dist < mindist then
 				mindist = dist
@@ -132,7 +134,7 @@ function ItemWheel:OnUpdate()
 		end
 	end
 	
-	for k,v in pairs(self.gestures) do
+	for k,v in pairs(self.items) do
 		if k == mingesture then
 			v:Expand()
 			self.activeitem = k
@@ -143,7 +145,7 @@ function ItemWheel:OnUpdate()
 end
 
 local function SetWheelAlpha(wheel, alpha)
-	for _,badge in pairs(wheel.gestures) do
+	for _,badge in pairs(wheel.items) do
 		badge:SetFadeAlpha(alpha)
 		if badge.puppet ~= nil then
 			badge.puppet.animstate:SetMultColour(1,1,1,alpha)
@@ -167,7 +169,7 @@ function ItemWheel:SwitchWheel(delta)
 	self.activewheel = math.max(1, math.min(self.activewheel + delta, #self.wheels))
 	if oldwheel ~= self.activewheel then
 		if self.activeitem ~= nil then
-			self.gestures[self.activeitem]:Contract()
+			self.items[self.activeitem]:Contract()
 			self.activeitem = nil
 		end
 		SetWheelAlpha(self.wheels[oldwheel], 0.25)

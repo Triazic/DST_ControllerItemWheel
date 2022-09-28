@@ -284,7 +284,8 @@ local function HideItemWheel(delay_focus_loss)
 		print("action fired")
 		local itemIndex = itemwheel.activeitem -- NOT SAFE, WILL PROBABLY FUCK UP WHEN MULTIPLE WHEELS
 		print(itemIndex)
-		local item = GLOBAL.ThePlayer.components.inventory:GetItemInSlot(itemIndex)
+		--local item = GLOBAL.ThePlayer.components.inventory:GetItemInSlot(itemIndex)
+		local item = itemwheel.actualItems[itemIndex]
 		if item == nil then 
 			print("item is nil somehow, index was:")
 			print(tostring(itemIndex))
