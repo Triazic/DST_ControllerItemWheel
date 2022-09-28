@@ -148,8 +148,6 @@ if OLD_ADDED and not ONLYEIGHT then
 		}
 end
 
-local item_sets = {}
-
 local function ActuallyBuildItemSets()
 	local actual_item_sets = {}
 	
@@ -171,71 +169,6 @@ local function ActuallyBuildItemSets()
 	)
 
 	return actual_item_sets
-end
-
-local function BuildItemSets()
-	item_sets = {}
-	
-	if PARTY_EMOTES ~= nil then
-		table.insert(item_sets, PARTY_EMOTES)
-	end
-
-	if OLD_EMOTES ~= nil then
-		table.insert(item_sets, OLD_EMOTES)
-	end
-	
-	--Add in all the default emotes
-	local EMOTES = {}
-	--Check if we have some of the emote items
-	local EMOTE_ITEMS_OWNED = {}
-	local TheInventory = GLOBAL.TheInventory
-	for _,item in pairs(EMOTE_ITEMS) do
-		if TheInventory:CheckOwnership(item.item) then
-			table.insert(EMOTE_ITEMS_OWNED, item)
-		end
-	end
-
-	if ONLYEIGHT then
-		-- Build a lookup table for emotes that are allowable here
-		EIGHTABLE_EMOTES = {}
-		for _,e in pairs(DEFAULT_EMOTES) do
-			EIGHTABLE_EMOTES[e.name] = e
-		end
-		for _,e in pairs(EMOTE_ITEMS_OWNED) do
-			EIGHTABLE_EMOTES[e.name] = e
-		end
-		for _,v in ipairs(EIGHTS) do
-			table.insert(EMOTES, EIGHTABLE_EMOTES[v])
-		end
-	else
-		for _,v in ipairs(DEFAULT_EMOTES) do
-			table.insert(EMOTES, v)
-		end
-		-- If we have only two emotes, put them in the normal wheel; a 2-item wheel is... not round
-		-- Otherwise, we can make an inner wheel for them
-		if #EMOTE_ITEMS_OWNED > 2 then
-			table.insert(item_sets, {
-				name = "unlockable",
-				emotes = EMOTE_ITEMS_OWNED,
-				radius = 260, -- will need to be adjusted if number of emotes changes
-				color = GLOBAL.PLAYERCOLOURS.PERU,
-			})
-		elseif #EMOTE_ITEMS_OWNED > 0 then
-			for _,v in pairs(EMOTE_ITEMS_OWNED) do
-				table.insert(EMOTES, v)
-			end
-		end
-	end
-	
-	table.insert(
-		item_sets, 
-		{
-			name = "default",
-			emotes = EMOTES,
-			radius = ONLYEIGHT and 250 or 325,
-			color = GLOBAL.BROWN,
-		}
-	)
 end
 
 --All code below is for handling the wheel
@@ -353,7 +286,6 @@ end
 
 local handlers_applied = false
 local function AddItemWheel(self)
-	BuildItemSets() --delay this so that the account item checks are more likely to work
 	controls = self -- this just makes controls available in the rest of the modmain's functions
 	if gesturewheel then
 		gesturewheel:Kill()
