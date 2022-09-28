@@ -238,8 +238,20 @@ local function ResetTransform()
 	gesturewheel.inst.UITransform:SetScale(STARTSCALE, STARTSCALE, 1)
 end
 
+local function GetNumberOfItemsInInventory()
+	return GLOBAL.ThePlayer.components.inventory:NumItems()
+end
+
+local function PrintEachItemInInventory(numItems)
+	GLOBAL.ThePlayer.components.inventory:ForEachItem(function(v) 
+		print(v.prefab)
+	end)
+end
+
 local function ShowGestureWheel(controller_mode)
 	print("attempting to show gesture wheel")
+	print("n items in contents")
+	PrintEachItemInInventory()
 	if keydown then 
 		print('keydown was true..?')
 		return 
