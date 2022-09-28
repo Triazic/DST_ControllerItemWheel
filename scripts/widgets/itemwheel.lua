@@ -2,6 +2,29 @@ local Widget = require "widgets/widget"
 local Text = require "widgets/text"
 local ItemBadge = require("widgets/itembadge")
 
+local function build_wheel(self, name, emotes, radius, color, scale, image, text)
+	local wheel = self.root:AddChild(Widget("ItemWheelRoot-"..name))
+	wheel:SetScale(1)
+	table.insert(self.wheels, wheel)
+	if name == "default" then
+		self.activewheel = #self.wheels
+	end
+	local count = #emotes
+	radius = radius * scale
+	wheel.radius = radius
+	local delta = 2*math.pi/count
+	local theta = 0
+	wheel.gestures = {}
+	for i,v in ipairs(emotes) do
+		local itemBadge = wheel:AddChild(ItemBadge("log", image, text, color))
+		itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
+		itemBadge:SetScale(scale)
+		self.gestures[v.name] = itemBadge
+		wheel.gestures[v.name] = itemBadge
+		theta = theta + delta
+	end
+end
+
 local ItemWheel = Class(Widget, function(self, item_sets, image, text, rightstick)
 	Widget._ctor(self, "ItemWheel")
 	self.isFE = false
@@ -16,33 +39,11 @@ local ItemWheel = Class(Widget, function(self, item_sets, image, text, rightstic
 	self.activewheel = nil
 	self.controllermode = false
 
-	local function build_wheel(name, emotes, radius, color, scale)
-		local wheel = self.root:AddChild(Widget("ItemWheelRoot-"..name))
-		wheel:SetScale(1)
-		table.insert(self.wheels, wheel)
-		if name == "default" then
-			self.activewheel = #self.wheels
-		end
-		local count = #emotes
-		radius = radius * scale
-		wheel.radius = radius
-		local delta = 2*math.pi/count
-		local theta = 0
-		wheel.gestures = {}
-		for i,v in ipairs(emotes) do
-			local itemBadge = wheel:AddChild(ItemBadge("log", image, text, color))
-			itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
-			itemBadge:SetScale(scale)
-			self.gestures[v.name] = itemBadge
-			wheel.gestures[v.name] = itemBadge
-			theta = theta + delta
-		end
-	end
 	-- Sort the emote sets in order of decreasing radius
 	table.sort(item_sets, function(a,b) return a.radius > b.radius end)
 	local scale = 1
 	for _,emote_set in ipairs(item_sets) do
-		build_wheel(emote_set.name, emote_set.emotes, emote_set.radius, emote_set.color, scale)
+		build_wheel(self, emote_set.name, emote_set.emotes, emote_set.radius, emote_set.color, scale, image, text)
 		scale = scale * 0.85
 	end
 	
