@@ -26,6 +26,7 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 end
 
 local function construct(self, item_sets, image, text)
+	self.root:KillAllChildren()
 	self.gestures = {}
 	self.wheels = {}
 	self.activewheel = nil
