@@ -152,7 +152,13 @@ local function ActuallyBuildItemSets()
 	local actual_item_sets = {}
 	
 	local defaultitemset = {}
-	local allitems = GLOBAL.ThePlayer.components.inventory:FindItems(function() return true end)
+	local allitems = GLOBAL.ThePlayer.components.inventory:FindItems(function(item)
+		-- only get equippable items
+		if item == nil or item.components.equippable == nil or not item:IsValid() then
+			return false
+		end
+		return true
+	end)
 	for i, item in ipairs(allitems) do 
 		item.myIndex = i
 		defaultitemset[i] = item
