@@ -1,7 +1,5 @@
 local Image = require "widgets/image"
 local Widget = require "widgets/widget"
-local UIAnim = require "widgets/uianim"
-local SkinsPuppet = require "widgets/skinspuppet"
 local Text = require "widgets/text"
 local ItemTile = require "widgets/itemtile"
 
