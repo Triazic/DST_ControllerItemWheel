@@ -1,17 +1,17 @@
-name = "Gesture Wheel"
+name = "Item Wheel for Controllers"
 description = "Radial wheel for controller users to equip equippable items ala Ratchet and Clank."
 author = "triazic"
 version = "1.8.3"
 
-forumthread = "/files/file/980-dst-gesture-wheel/"
+forumthread = "//"
 
 api_version = 10
 
 priority = -1 -- to make it load after Party Dance
 
 -- Compatible with the base game & ROG
-dont_starve_compatible = true
-reign_of_giants_compatible = true
+dont_starve_compatible = false
+reign_of_giants_compatible = false
 dst_compatible = true
 
 icon_atlas = "gesturewheelicon.xml"

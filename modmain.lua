@@ -316,9 +316,12 @@ local function AddItemWheel(self)
 			end
 		end)
 
-		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_CONTROLLER_ACTION, function(down)
-			if ((not down) and using_gesture_wheel) then
-				-- up press of A while using wheel!
+		GLOBAL.ACTIONS.LOOKAT.fn = function(act) return end -- disables inspection completely
+		GLOBAL.ThePlayer.HUD.InspectSelf = function() return end -- disables self inspection popup
+
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_2, function(down)
+			if ((down) and using_gesture_wheel) then
+				-- show default inventory
 				HideItemWheel(true)
 				originalOpenControllerInventory(GLOBAL.ThePlayer.HUD)
 			end
