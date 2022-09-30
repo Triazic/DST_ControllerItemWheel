@@ -1,3 +1,7 @@
+local function GetInventory()
+	return GLOBAL.ThePlayer.replica.inventory
+end
+
 Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
@@ -137,13 +141,14 @@ local function ActuallyBuildItemSets()
 	local actual_item_sets = {}
 	
 	local defaultitemset = {}
-	local allitems = GLOBAL.ThePlayer.components.inventory:FindItems(function(item)
-		-- only get equippable items
-		if item == nil or item.components.equippable == nil or not item:IsValid() then
-			return false
-		end
-		return true
-	end)
+	local allitems = GetInventory():GetItems()
+	-- (function(item)
+	-- 	-- only get equippable items
+	-- 	if item == nil or item.components.equippable == nil or not item:IsValid() then
+	-- 		return false
+	-- 	end
+	-- 	return true
+	-- end)
 	for i, item in ipairs(allitems) do 
 		item.myIndex = i
 		defaultitemset[i] = item
@@ -269,14 +274,14 @@ local function HideItemWheel(delay_focus_loss)
 	
 	if itemwheel.activeitem then -- actually an active item
 		local itemIndex = itemwheel.activeitem -- NOT SAFE, WILL PROBABLY FUCK UP WHEN MULTIPLE WHEELS
-		--local item = GLOBAL.ThePlayer.components.inventory:GetItemInSlot(itemIndex)
+		--local item = GetInventory():GetItemInSlot(itemIndex)
 		local item = itemwheel.actualItems[itemIndex]
 		if item == nil then 
 			print("item is nil somehow, index was:")
 			print(tostring(itemIndex))
 			return
 		end
-		GLOBAL.ThePlayer.components.inventory:Equip(item)
+		GetInventory():EquipActionItem(item)
 	end
 end
 
