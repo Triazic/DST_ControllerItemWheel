@@ -167,10 +167,10 @@ local function ActuallyBuildItemSets()
 		table.insert(defaultitemset, item)
 	end
 
-	for i, item in ipairs(defaultitemset) do 
-		print(item.prefab)
-		print(item.myIndex)
-	end
+	-- for i, item in ipairs(defaultitemset) do 
+	-- 	print(item.prefab)
+	-- 	print(item.myIndex)
+	-- end
 	
 	local actual_item_sets = {}
 	table.insert(
