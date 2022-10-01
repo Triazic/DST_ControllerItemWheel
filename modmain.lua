@@ -2,6 +2,19 @@ local function GetInventory()
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
+local function ActuallyGetItems()
+	local items = {}
+	local inventory = GetInventory()
+	local numItems = inventory:GetNumSlots()
+	for i = 1, numItems do 
+		local item = inventory:GetItemInSlot(i)
+		if (item ~= nil) then
+			table.insert(items, item)
+		end 
+	end
+	return items
+end
+
 Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
@@ -139,7 +152,7 @@ end
 
 local function ActuallyBuildItemSets()
 	-- get all items
-	local allitems = GetInventory():GetItems()
+	local allitems = ActuallyGetItems()
 
 	-- filter to equippable items
 	local equippableItems = {}
