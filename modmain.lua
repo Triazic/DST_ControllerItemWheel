@@ -2,6 +2,7 @@ local function GetInventory()
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
+Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
 }
