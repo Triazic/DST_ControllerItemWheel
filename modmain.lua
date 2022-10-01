@@ -138,22 +138,39 @@ if OLD_ADDED and not ONLYEIGHT then
 end
 
 local function ActuallyBuildItemSets()
-	local actual_item_sets = {}
-	
-	local defaultitemset = {}
+	-- get all items
 	local allitems = GetInventory():GetItems()
-	-- (function(item)
-	-- 	-- only get equippable items
-	-- 	if item == nil or item.components.equippable == nil or not item:IsValid() then
-	-- 		return false
-	-- 	end
-	-- 	return true
-	-- end)
-	for i, item in ipairs(allitems) do 
-		item.myIndex = i
-		defaultitemset[i] = item
+
+	-- filter to equippable items
+	local equippableItems = {}
+	-- local handItem = GetInventory():GetEquippedItem(GLOBAL.EQUIPSLOTS.HANDS)
+	-- local headItem = GetInventory():GetEquippedItem(GLOBAL.EQUIPSLOTS.HEAD)
+	-- local bodyItem = GetInventory():GetEquippedItem(GLOBAL.EQUIPSLOTS.BODY)
+	for i, item in ipairs(allitems) do
+		local equippable = item.replica.equippable ~= nil
+		-- local isEquipped = (handItem ~= nil and item == handItem)
+		-- 				or (headItem ~= nil and item == headItem)
+		-- 				or (bodyItem ~= nil and item == bodyItem)
+		if (
+				equippable 
+				--and (not isEquipped)
+			) then 
+			item.myIndex = i
+			table.insert(equippableItems, item)
+		end
+	end
+	-- add to item set
+	local defaultitemset = {}
+	for i, item in ipairs(equippableItems) do
+		table.insert(defaultitemset, item)
+	end
+
+	for i, item in ipairs(defaultitemset) do 
+		print(item.prefab)
+		print(item.myIndex)
 	end
 	
+	local actual_item_sets = {}
 	table.insert(
 		actual_item_sets, 
 		{
