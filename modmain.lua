@@ -2,7 +2,6 @@ local function GetInventory()
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
-Assets = {
 	Asset("IMAGE", "images/gesture_bg.tex"),
 	Asset("ATLAS", "images/gesture_bg.xml"),
 }
@@ -298,7 +297,7 @@ local function HideItemWheel(delay_focus_loss)
 			print(tostring(itemIndex))
 			return
 		end
-		GetInventory():EquipActionItem(item)
+		GetInventory():UseItemFromInvTile(item)
 	end
 end
 
