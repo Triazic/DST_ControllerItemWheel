@@ -148,6 +148,8 @@ local function ActuallyBuildItemSets()
 	-- local bodyItem = GetInventory():GetEquippedItem(GLOBAL.EQUIPSLOTS.BODY)
 	for i, item in ipairs(allitems) do
 		local equippable = item.replica.equippable ~= nil
+		print(item.prefab)
+		print(tostring(equippable))
 		-- local isEquipped = (handItem ~= nil and item == handItem)
 		-- 				or (headItem ~= nil and item == headItem)
 		-- 				or (bodyItem ~= nil and item == bodyItem)
