@@ -198,12 +198,6 @@ end
 local function HideItemWheel(delay_focus_loss)
 	if type(GLOBAL.ThePlayer) ~= "table" or type(GLOBAL.ThePlayer.HUD) ~= "table" then return end
 	keydown = false
-	if delay_focus_loss and itemwheel.activeitem then
-		--delay a little on controllers to prevent canceling the emote by moving
-		--GLOBAL.ThePlayer:DoTaskInTime(0.5, function() SetModHUDFocus("ItemWheel", false) end)
-	else
-		--SetModHUDFocus("ItemWheel", false)
-	end
 	
 	itemwheel:Hide()
 	GLOBAL.ThePlayer.HUD.controls:ShowCraftingAndInventory()
@@ -235,6 +229,8 @@ local function HideItemWheel(delay_focus_loss)
 		end
 		GetInventory():UseItemFromInvTile(item)
 	end
+
+	SetModHUDFocus("ItemWheel", false)
 end
 
 local handlers_applied = false
@@ -270,6 +266,14 @@ local function AddItemWheel(self)
 				return -- this case doesn't get hit anyway
 			else
 				HideItemWheel(true)
+			end
+		end)
+
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_4, function(down)
+			if down then
+				SetModHUDFocus("ItemWheel", true)
+			else
+				return
 			end
 		end)
 
