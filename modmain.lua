@@ -263,6 +263,33 @@ local function AddItemWheel(self)
 			end
 		end)
 
+		-- hot switching
+		-- CONTROL_INVENTORY_EXAMINE = 51 -- d-pad up
+		-- CONTROL_INVENTORY_USEONSELF = 52 -- d-pad right
+		-- CONTROL_INVENTORY_USEONSCENE = 53 -- d-pad left
+		-- CONTROL_INVENTORY_DROP = 54 -- d-pad down
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_EXAMINE, function(down)
+			if not down then return end
+			if itemwheel.activeitem == nil then return end
+			local item = itemwheel.actualItems[itemwheel.activeitem]
+			if item == nil then return end
+			itemwheel.item1 = item
+		end)
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_USEONSELF, function(down)
+			if not down then return end
+			if itemwheel.activeitem == nil then return end
+			local item = itemwheel.actualItems[itemwheel.activeitem]
+			if item == nil then return end
+			itemwheel.item2 = item
+		end)
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_DROP, function(down)
+			if not down then return end
+			if itemwheel.activeitem == nil then return end
+			local item = itemwheel.actualItems[itemwheel.activeitem]
+			if item == nil then return end
+			itemwheel.item3 = item
+		end)
+
 		GLOBAL.ACTIONS.LOOKAT.fn = function(act) return end -- disables inspection completely
 		GLOBAL.ThePlayer.HUD.InspectSelf = function() return end -- disables self inspection popup
 

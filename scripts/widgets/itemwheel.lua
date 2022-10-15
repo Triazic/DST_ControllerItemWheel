@@ -50,6 +50,9 @@ local ItemWheel = Class(Widget, function(self, image, text, rightstick)
 	self.screenscalefactor = 1
 	self.controllermode = false
 	self.root = self:AddChild(Widget("root"))
+	self.item1 = nil
+	self.item2 = nil
+	self.item3 = nil
 end)
 
 local function GetMouseDistance(self, gesture, mouse)
