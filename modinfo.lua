@@ -14,8 +14,8 @@ dont_starve_compatible = false
 reign_of_giants_compatible = false
 dst_compatible = true
 
-icon_atlas = "gesturewheelicon.xml"
-icon = "gesturewheelicon.tex"
+--icon_atlas = "gesturewheelicon.xml"
+--icon = "gesturewheelicon.tex"
 
 --These let clients know if they need to get the mod from the Steam Workshop to join the game
 all_clients_require_mod = false
