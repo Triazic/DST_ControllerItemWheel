@@ -16,7 +16,7 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 	local theta = math.pi/2
 	wheel.items = {}
 	for i, item in ipairs(emotes) do
-		local itemBadge = wheel:AddChild(ItemBadge(item, image, text, color))
+		local itemBadge = wheel:AddChild(ItemBadge(item, image, text, color, self.item1, self.item2, self.item3))
 		itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
 		itemBadge:SetScale(scale)
 		self.actualItems[item.myIndex] = item

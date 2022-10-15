@@ -6,6 +6,16 @@ local function PrintTable(table)
 	for key,value in pairs(table) do print(key,value) end 
 end
 
+local function GetIfItemEquipped(item)
+	local handItem = GetInventory():GetEquippedItem(GLOBAL.EQUIPSLOTS.HANDS)
+	if (handItem ~= nil and handItem == item) then return true end
+	local headItem = GetInventory():GetEquippedItem(GLOBAL.EQUIPSLOTS.HEAD)
+	if (headItem ~= nil and headItem == item) then return true end
+	local bodyItem = GetInventory():GetEquippedItem(GLOBAL.EQUIPSLOTS.BODY)
+	if (bodyItem ~= nil and bodyItem == item) then return true end
+	return false
+end
+
 local function ActuallyGetItems()
 	local items = {}
 	local inventory = GetInventory()
@@ -293,11 +303,31 @@ local function AddItemWheel(self)
 		GLOBAL.ACTIONS.LOOKAT.fn = function(act) return end -- disables inspection completely
 		GLOBAL.ThePlayer.HUD.InspectSelf = function() return end -- disables self inspection popup
 
+		local timeLastTriangleDown = 0
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_2, function(down)
 			if ((down) and using_gesture_wheel) then
 				-- show default inventory
 				HideItemWheel(true)
 				originalOpenControllerInventory(GLOBAL.ThePlayer.HUD)
+			elseif (down and (not using_gesture_wheel)) then 
+				timeLastTriangleDown = GLOBAL.GetTime()
+			elseif ((not down) and (not using_gesture_wheel)) then 
+				function GetItemToHotSwitchTo()
+					if (itemwheel.item3 ~=nil and (not GetIfItemEquipped(itemwheel.item3) and (GLOBAL.GetTime() - timeLastTriangleDown > 0.2))) then 
+						return itemwheel.item3
+					end
+					if (itemwheel.item1 ~=nil and (not GetIfItemEquipped(itemwheel.item1))) then 
+						return itemwheel.item1
+					end
+					if (itemwheel.item2 ~=nil and (not GetIfItemEquipped(itemwheel.item2))) then 
+						return itemwheel.item2
+					end
+					return nil
+				end
+				local itemToSwitchTo = GetItemToHotSwitchTo()
+				if (itemToSwitchTo ~= nil) then
+					GetInventory():UseItemFromInvTile(itemToSwitchTo)
+				end
 			end
 		end)
 		
