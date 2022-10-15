@@ -269,8 +269,8 @@ local function AddItemWheel(self)
 			end
 		end)
 
-		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_4, function(down)
-			if down then
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_3, function(down)
+			if (down and using_gesture_wheel) then
 				SetModHUDFocus("ItemWheel", true)
 			else
 				return
