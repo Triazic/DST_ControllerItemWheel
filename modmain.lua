@@ -2,6 +2,10 @@ local function GetInventory()
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
+local function PrintTable(table)
+	for key,value in pairs(table) do print(key,value) end 
+end
+
 local function ActuallyGetItems()
 	local items = {}
 	local inventory = GetInventory()
@@ -12,9 +16,18 @@ local function ActuallyGetItems()
 			table.insert(items, item)
 		end 
 	end
-	local backpack = inventory:GetOverflowContainer()
+	local overFlowContainer = inventory:GetOverflowContainer()
+	if overFlowContainer == nil then return items end
+	local backpack = overFlowContainer
 	if backpack == nil then return items end
-	print(backpack)
+	local numBackPackSlots = backpack:GetNumSlots()
+	for i = 1, numBackPackSlots do 
+		local item = backpack:GetItemInSlot(i)
+		if (item ~= nil) then
+			--print(item.prefab)
+			table.insert(items, item)
+		end 
+	end
 	return items
 end
 
