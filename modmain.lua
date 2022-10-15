@@ -288,6 +288,7 @@ local function AddItemWheel(self)
 			local item = itemwheel.actualItems[itemwheel.activeitem]
 			if item == nil then return end
 			itemwheel.item1 = item
+			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_USEONSELF, function(down)
 			if not down then return end
@@ -295,6 +296,7 @@ local function AddItemWheel(self)
 			local item = itemwheel.actualItems[itemwheel.activeitem]
 			if item == nil then return end
 			itemwheel.item2 = item
+			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_DROP, function(down)
 			if not down then return end
@@ -302,6 +304,7 @@ local function AddItemWheel(self)
 			local item = itemwheel.actualItems[itemwheel.activeitem]
 			if item == nil then return end
 			itemwheel.item3 = item
+			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
 
 		GLOBAL.ACTIONS.LOOKAT.fn = function(act) return end -- disables inspection completely
