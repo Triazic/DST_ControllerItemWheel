@@ -316,6 +316,9 @@ local function AddItemWheel(self)
 				-- show default inventory
 				HideItemWheel(true)
 				originalOpenControllerInventory(GLOBAL.ThePlayer.HUD)
+			elseif (GLOBAL.ThePlayer.HUD:IsControllerInventoryOpen()) then 
+				-- don't do anything if inventory open
+				return
 			elseif (down and (not using_gesture_wheel)) then 
 				timeLastTriangleDown = GLOBAL.GetTime()
 			elseif ((not down) and (not using_gesture_wheel)) then 
