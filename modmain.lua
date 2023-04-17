@@ -1,4 +1,9 @@
 local function GetInventory()
+	local isInteractable = GLOBAL.ThePlayer:HasTag("inspectable")
+	print(tostring(isInteractable))
+	GLOBAL.ThePlayer:RemoveTag("inspectable")
+	local isInteractable = GLOBAL.ThePlayer:HasTag("inspectable")
+	print(tostring(isInteractable))
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
@@ -309,6 +314,7 @@ local function AddItemWheel(self)
 
 		GLOBAL.ACTIONS.LOOKAT.fn = function(act) return end -- disables inspection completely
 		GLOBAL.ThePlayer.HUD.InspectSelf = function() return end -- disables self inspection popup
+		GLOBAL.ThePlayer.HUD.ShowPlayerStatusScreen = function(a, b) return end -- disables other player inspection popup
 
 		local timeLastTriangleDown = 0
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_2, function(down)
