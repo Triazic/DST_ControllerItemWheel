@@ -1,9 +1,17 @@
 local function GetInventory()
-	local isInteractable = GLOBAL.ThePlayer:HasTag("inspectable")
-	print(tostring(isInteractable))
-	GLOBAL.ThePlayer:RemoveTag("inspectable")
-	local isInteractable = GLOBAL.ThePlayer:HasTag("inspectable")
-	print(tostring(isInteractable))
+	if (GLOBAL.ThePlayer ~= nil) then 
+		print("The Player not nil.. removing tag")
+		GLOBAL.ThePlayer:RemoveTag("inspectable")
+		print("The Player not nil.. removed tag")
+		if (GLOBAL.ThePlayer.replica ~= nil) then 
+			print("The Player replica not nil.. removing tag")
+			if (GLOBAL.ThePlayer.replica.RemoveTag ~= nil) then 
+				print("Remove tag was not nil")
+				GLOBAL.ThePlayer.replica:RemoveTag("inspectable")
+				print("The Player replica not nil.. removed tag")
+			end
+		end
+	end
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
