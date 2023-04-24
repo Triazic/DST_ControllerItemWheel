@@ -4,11 +4,12 @@ AddPlayerPostInit(function(player)
 	print("got all players... ")
 	for i, player in ipairs(GLOBAL.AllPlayers) do
 		print(player.name)
-		print(tostring(player.HasTag ~= nil))
-		print(tostring(player.RemoveTag ~= nil))
-		print(tostring(player:HasTag("inspectable")))
+		print(player.name + " has tag function: " + tostring(player.HasTag ~= nil))
+		print(player.name + " has remove function: " + tostring(player.RemoveTag ~= nil))
+		print(player.name + " has tag inspectable: " + tostring(player:HasTag("inspectable")))
+		print("removing now")
 		player:RemoveTag("inspectable")
-		print(tostring(player:HasTag("inspectable")))
+		print(player.name + " has tag inspectable: " + tostring(player:HasTag("inspectable")))
 	end
 	-- print("a")
 	-- if (player == nil) then return end
@@ -20,6 +21,18 @@ AddPlayerPostInit(function(player)
 end)
 
 local function GetInventory()
+	if (GLOBAL.ThePlayer ~= nil) then 
+		if (GLOBAL.ThePlayer.RemoveTag ~= nil) then
+			print("removing tag from global player")
+			GLOBAL.ThePlayer:RemoveTag("inspectable")
+		end
+		if (GLOBAL.ThePlayer.replica ~= nil) then 
+			if (GLOBAL.ThePlayer.replica.RemoveTag ~= nil) then 
+				print("removing tag from global player replica")
+				GLOBAL.ThePlayer.replica:RemoveTag("inspectable")
+			end
+		end
+	end
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
