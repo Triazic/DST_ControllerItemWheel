@@ -4,12 +4,12 @@ AddPlayerPostInit(function(player)
 	print("got all players... ")
 	for i, player in ipairs(GLOBAL.AllPlayers) do
 		print(player.name)
-		print(player.name + " has tag function: " + tostring(player.HasTag ~= nil))
-		print(player.name + " has remove function: " + tostring(player.RemoveTag ~= nil))
-		print(player.name + " has tag inspectable: " + tostring(player:HasTag("inspectable")))
+		print(player.name .. " has tag function: " .. tostring(player.HasTag ~= nil))
+		print(player.name .. " has remove function: " .. tostring(player.RemoveTag ~= nil))
+		print(player.name .. " has tag inspectable: " .. tostring(player:HasTag("inspectable")))
 		print("removing now")
 		player:RemoveTag("inspectable")
-		print(player.name + " has tag inspectable: " + tostring(player:HasTag("inspectable")))
+		print(player.name .. " has tag inspectable: " .. tostring(player:HasTag("inspectable")))
 	end
 	-- print("a")
 	-- if (player == nil) then return end
