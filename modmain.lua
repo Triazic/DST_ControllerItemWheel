@@ -1,38 +1,16 @@
 AddPlayerPostInit(function(player)
-	print("yo")
-	if (GLOBAL.AllPlayers == nil) then return end
-	print("got all players... ")
-	for i, player in ipairs(GLOBAL.AllPlayers) do
-		print(player.name)
-		print(player.name .. " has tag function: " .. tostring(player.HasTag ~= nil))
-		print(player.name .. " has remove function: " .. tostring(player.RemoveTag ~= nil))
-		print(player.name .. " has tag inspectable: " .. tostring(player:HasTag("inspectable")))
-		print("removing now")
-		player:RemoveTag("inspectable")
-		print(player.name .. " has tag inspectable: " .. tostring(player:HasTag("inspectable")))
-	end
-	-- print("a")
-	-- if (player == nil) then return end
-	-- print("b")
-	-- if (player.name == nil) then return end
-	-- print(player.name)
-	-- if (player.RemoveTag == nil) then return end
-	-- player:RemoveTag("inspectable")
+
 end)
+-- function RemoveInspectable(inst)
+-- 	print("removing inspectable")  
+-- 	inst:RemoveTag("inspectable")
+-- end
+-- for k,prefab in pairs(GLOBAL.PREFABFILES) do
+-- 	AddPrefabPostInit(prefab, RemoveInspectable)
+-- end
 
 local function GetInventory()
-	if (GLOBAL.ThePlayer ~= nil) then 
-		if (GLOBAL.ThePlayer.RemoveTag ~= nil) then
-			print("removing tag from global player")
-			GLOBAL.ThePlayer:RemoveTag("inspectable")
-		end
-		if (GLOBAL.ThePlayer.replica ~= nil) then 
-			if (GLOBAL.ThePlayer.replica.RemoveTag ~= nil) then 
-				print("removing tag from global player replica")
-				GLOBAL.ThePlayer.replica:RemoveTag("inspectable")
-			end
-		end
-	end
+	GLOBAL.ThePlayer.components.playercontroller.DoInspectButton = function() return end
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
