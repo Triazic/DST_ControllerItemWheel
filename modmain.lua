@@ -1,5 +1,4 @@
 AddPlayerPostInit(function(player)
-
 end)
 -- function RemoveInspectable(inst)
 -- 	print("removing inspectable")  
@@ -11,6 +10,10 @@ end)
 
 local function GetInventory()
 	GLOBAL.ThePlayer.components.playercontroller.DoInspectButton = function() return end
+	print(tostring(GLOBAL.ThePlayer.CanExamine ~= nil))
+	print(tostring(GLOBAL.ThePlayer.components.CanExamine ~= nil))
+	print(tostring(GLOBAL.ThePlayer.components.playercontroller.CanExamine ~= nil))
+	GLOBAL.ThePlayer.CanExamine = function(inst) return false end
 	return GLOBAL.ThePlayer.replica.inventory
 end
 
