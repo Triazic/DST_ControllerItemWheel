@@ -9,7 +9,7 @@ end)
 -- end
 
 local function GetInventory()
-	GLOBAL.ThePlayer.components.playercontroller.DoInspectButton = function() return end
+	-- GLOBAL.ThePlayer.components.playercontroller.DoInspectButton = function() return end
 	print(tostring(GLOBAL.ThePlayer.CanExamine ~= nil))
 	print(tostring(GLOBAL.ThePlayer.components.CanExamine ~= nil))
 	print(tostring(GLOBAL.ThePlayer.components.playercontroller.CanExamine ~= nil))
@@ -291,6 +291,9 @@ local function AddItemWheel(self)
 				return
 			end
 		end)
+		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_4, function(down)
+			GLOBAL.ThePlayer.CanExamine = function(inst) return true end
+		end)
 
 		-- hot switching
 		-- CONTROL_INVENTORY_EXAMINE = 51 -- d-pad up
@@ -322,7 +325,7 @@ local function AddItemWheel(self)
 			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
 
-		GLOBAL.ACTIONS.LOOKAT.fn = function(act) return end -- disables inspection completely
+		-- GLOBAL.ACTIONS.LOOKAT.fn = function(act) return end -- disables inspection completely
 		GLOBAL.ThePlayer.HUD.InspectSelf = function() return end -- disables self inspection popup
 		GLOBAL.ThePlayer.HUD.ShowPlayerStatusScreen = function(a, b) return end -- disables other player inspection popup
 
