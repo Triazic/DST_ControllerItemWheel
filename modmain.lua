@@ -349,19 +349,19 @@ local function AddItemWheel(self)
 				function GetItemToHotSwitchTo()
 					if (itemwheel.item3prefab ~=nil and (GLOBAL.GetTime() - timeLastTriangleDown > 0.2)) then 
 						local item = GetItemFromPrefabName(itemwheel.item3prefab)
-						if (not GetIfItemEquipped(item)) then
+						if (item ~= nil and (not GetIfItemEquipped(item))) then
 							return item
 						end
 					end
 					if (itemwheel.item1prefab ~=nil) then
 						local item = GetItemFromPrefabName(itemwheel.item1prefab)
-						if (not GetIfItemEquipped(item)) then
+						if (item ~= nil and (not GetIfItemEquipped(item))) then
 							return item
 						end
 					end
 					if (itemwheel.item2prefab ~=nil) then 
 						local item = GetItemFromPrefabName(itemwheel.item2prefab)
-						if (not GetIfItemEquipped(item)) then
+						if (item ~= nil and (not GetIfItemEquipped(item))) then
 							return item
 						end
 					end
