@@ -298,7 +298,7 @@ local function AddItemWheel(self)
 			if itemwheel.activeitem == nil then return end
 			local item = itemwheel.actualItems[itemwheel.activeitem]
 			if item == nil then return end
-			itemwheel.item1 = item
+			itemwheel.item1prefab = item.prefab
 			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
 		-- d-pad right
@@ -307,7 +307,7 @@ local function AddItemWheel(self)
 			if itemwheel.activeitem == nil then return end
 			local item = itemwheel.actualItems[itemwheel.activeitem]
 			if item == nil then return end
-			itemwheel.item2 = item
+			itemwheel.item2prefab = item.prefab
 			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
 		-- d-pad down
@@ -316,7 +316,7 @@ local function AddItemWheel(self)
 			if itemwheel.activeitem == nil then return end
 			local item = itemwheel.actualItems[itemwheel.activeitem]
 			if item == nil then return end
-			itemwheel.item3 = item
+			itemwheel.item3prefab = item.prefab
 			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
 
@@ -335,16 +335,35 @@ local function AddItemWheel(self)
 				return
 			elseif (down and (not using_gesture_wheel)) then 
 				timeLastTriangleDown = GLOBAL.GetTime()
-			elseif ((not down) and (not using_gesture_wheel)) then 
+			elseif ((not down) and (not using_gesture_wheel)) then
+				function GetItemFromPrefabName(prefab)
+					if (prefab == nil) then return nil end
+					local items = ActuallyGetItems()
+					for i,item in ipairs(items) do
+						if (item.prefab == prefab) then 
+							return item
+						end
+					end
+					return nil
+				end
 				function GetItemToHotSwitchTo()
-					if (itemwheel.item3 ~=nil and (not GetIfItemEquipped(itemwheel.item3) and (GLOBAL.GetTime() - timeLastTriangleDown > 0.2))) then 
-						return itemwheel.item3
+					if (itemwheel.item3prefab ~=nil and (GLOBAL.GetTime() - timeLastTriangleDown > 0.2)) then 
+						local item = GetItemFromPrefabName(itemwheel.item3prefab)
+						if (not GetIfItemEquipped(item)) then
+							return item
+						end
 					end
-					if (itemwheel.item1 ~=nil and (not GetIfItemEquipped(itemwheel.item1))) then 
-						return itemwheel.item1
+					if (itemwheel.item1prefab ~=nil) then
+						local item = GetItemFromPrefabName(itemwheel.item1prefab)
+						if (not GetIfItemEquipped(item)) then
+							return item
+						end
 					end
-					if (itemwheel.item2 ~=nil and (not GetIfItemEquipped(itemwheel.item2))) then 
-						return itemwheel.item2
+					if (itemwheel.item2prefab ~=nil) then 
+						local item = GetItemFromPrefabName(itemwheel.item2prefab)
+						if (not GetIfItemEquipped(item)) then
+							return item
+						end
 					end
 					return nil
 				end

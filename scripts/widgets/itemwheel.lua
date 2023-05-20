@@ -16,7 +16,7 @@ local function build_wheel(self, name, emotes, radius, color, scale, image, text
 	local theta = math.pi/2
 	wheel.items = {}
 	for i, item in ipairs(emotes) do
-		local itemBadge = wheel:AddChild(ItemBadge(item, image, text, color, self.item1, self.item2, self.item3))
+		local itemBadge = wheel:AddChild(ItemBadge(item, image, text, color, self.item1prefab, self.item2prefab, self.item3prefab))
 		itemBadge:SetPosition(radius*math.cos(theta),radius*math.sin(theta), 0)
 		itemBadge:SetScale(scale)
 		self.actualItems[item.myIndex] = item
@@ -50,9 +50,9 @@ local ItemWheel = Class(Widget, function(self, image, text, rightstick)
 	self.screenscalefactor = 1
 	self.controllermode = false
 	self.root = self:AddChild(Widget("root"))
-	self.item1 = nil
-	self.item2 = nil
-	self.item3 = nil
+	self.item1prefab = nil
+	self.item2prefab = nil
+	self.item3prefab = nil
 end)
 
 local function GetMouseDistance(self, gesture, mouse)

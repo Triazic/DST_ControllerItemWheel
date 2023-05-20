@@ -154,7 +154,7 @@ local function GetImageAsset(prefab)
 	return item_tex, resolvefilepath(atlas), localized_name
 end
 
-local ItemBadge = Class(Widget, function(self, item, image, text, color, item1, item2, item3)
+local ItemBadge = Class(Widget, function(self, item, image, text, color, item1prefab, item2prefab, item3prefab)
 	local prefab = item.prefab
 	local index = item.myIndex 
 
@@ -173,9 +173,9 @@ local ItemBadge = Class(Widget, function(self, item, image, text, color, item1, 
 	self.background:SetTint(unpack(self.color))
 	self.tile = self.root:AddChild(ItemTile(item))
 
-	local amItem1 = item1 ~= nil and item == item1
-	local amItem2 = item2 ~= nil and item == item2
-	local amItem3 = item3 ~= nil and item == item3
+	local amItem1 = item1prefab ~= nil and item.prefab == item1prefab
+	local amItem2 = item2prefab ~= nil and item.prefab == item2prefab
+	local amItem3 = item3prefab ~= nil and item.prefab == item3prefab
 
 	local function AddText(message)
 		local text = self.root:AddChild(Text(NUMBERFONT, 28))
