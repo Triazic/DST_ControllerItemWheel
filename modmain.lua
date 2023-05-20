@@ -272,10 +272,7 @@ local function AddItemWheel(self)
 			ShowItemWheel(true)
 		end
 		
-		-- Controller controls
-		-- This is pressing the left stick in
-		-- CONTROL_MENU_MISC_3 is the same thing as CONTROL_OPEN_DEBUG_MENU
-		-- CONTROL_MENU_MISC_4 is the right stick click
+		-- R2
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_OPEN_INVENTORY, function(down)
 			if down then
 				return -- this case doesn't get hit anyway
@@ -283,7 +280,7 @@ local function AddItemWheel(self)
 				HideItemWheel(true)
 			end
 		end)
-
+		-- L3
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_3, function(down)
 			if (down and using_gesture_wheel) then
 				SetModHUDFocus("ItemWheel", true)
@@ -291,15 +288,11 @@ local function AddItemWheel(self)
 				return
 			end
 		end)
+		-- R3
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_MENU_MISC_4, function(down)
 			GLOBAL.ThePlayer.CanExamine = function(inst) return true end
 		end)
-
-		-- hot switching
-		-- CONTROL_INVENTORY_EXAMINE = 51 -- d-pad up
-		-- CONTROL_INVENTORY_USEONSELF = 52 -- d-pad right
-		-- CONTROL_INVENTORY_USEONSCENE = 53 -- d-pad left
-		-- CONTROL_INVENTORY_DROP = 54 -- d-pad down
+		-- d-pad up
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_EXAMINE, function(down)
 			if not down then return end
 			if itemwheel.activeitem == nil then return end
@@ -308,6 +301,7 @@ local function AddItemWheel(self)
 			itemwheel.item1 = item
 			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
+		-- d-pad right
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_USEONSELF, function(down)
 			if not down then return end
 			if itemwheel.activeitem == nil then return end
@@ -316,6 +310,7 @@ local function AddItemWheel(self)
 			itemwheel.item2 = item
 			itemwheel:UpdateItems(ActuallyBuildItemSets(), SHOWIMAGE, SHOWTEXT)
 		end)
+		-- d-pad down
 		GLOBAL.TheInput:AddControlHandler(GLOBAL.CONTROL_INVENTORY_DROP, function(down)
 			if not down then return end
 			if itemwheel.activeitem == nil then return end
